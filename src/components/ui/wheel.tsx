@@ -15,9 +15,9 @@ export default function Wheel() {
     selectedXinFaIds, 
     customOptions, 
     isSpinning, 
-    setIsSpinning, 
-    startLottery, 
-    lastResult 
+    setIsSpinning,
+    startLottery,
+    lastResult
   } = useLotteryStore();
 
   const controls = useAnimation();
@@ -174,6 +174,8 @@ export default function Wheel() {
         {/* 扇区 */}
         {items.map((item, index) => {
           const rotate = index * anglePerSector;
+          const results = Array.isArray(lastResult) ? lastResult : (lastResult ? [lastResult] : []);
+          const isWinner = results.some(r => r.id === item.id);
           
           return (
             <div
@@ -191,12 +193,17 @@ export default function Wheel() {
               >
                 <div className="flex flex-col items-center gap-1 md:gap-1.5">
                   {item.image ? (
-                    <motion.div
-                      layoutId={`xinfa-icon-${item.id}`}
-                      className={cn(iconSizeClass, "flex items-center justify-center")}
-                    >
+                    <div className={cn(iconSizeClass, "flex items-center justify-center relative")}>
                       <img src={item.image} alt={item.name} className="w-full h-full object-contain drop-shadow-md" />
-                    </motion.div>
+                      {isWinner && !isSpinning && lastResult && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: [0, 0.8, 0], scale: [1, 1.5, 1.8] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className="absolute inset-0 bg-white/30 rounded-full blur-xl"
+                        />
+                      )}
+                    </div>
                   ) : (
                     <div className={cn(iconSizeClass, "rounded-full flex items-center justify-center text-xs text-center p-1 bg-white/10 backdrop-blur-md border border-white/20")}>
                       {item.name.slice(0, 2)}

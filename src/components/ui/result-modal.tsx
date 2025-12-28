@@ -126,12 +126,9 @@ export default function ResultModal() {
                     {/* 头像/图标 */}
                     <div className="w-16 h-16 flex items-center justify-center flex-shrink-0">
                       {res.image ? (
-                        <motion.div
-                          layoutId={`xinfa-icon-${res.id}`}
-                          className="w-full h-full"
-                        >
+                        <div className="w-full h-full">
                           <img src={res.image} alt={res.name} className="w-full h-full object-contain drop-shadow-md" />
-                        </motion.div>
+                        </div>
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-white font-bold text-xl">
                           {res.name.slice(0, 1)}
