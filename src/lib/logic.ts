@@ -31,7 +31,8 @@ export function drawSingle(selectedXinFa: XinFa[]): LotteryResult | null {
 export function drawTeam(
   members: string[],
   selectedXinFa: XinFa[],
-  healerCount: number
+  healerCount: number,
+  fixedHealerIndices: number[] = []
 ): LotteryResult[] {
   if (members.length === 0 || selectedXinFa.length === 0) return [];
 
@@ -39,67 +40,75 @@ export function drawTeam(
   const healerPool = selectedXinFa.filter((x) => x.type === 'healer');
   const dpsPool = selectedXinFa.filter((x) => x.type !== 'healer');
 
-  // 2. 检查池子是否足够
-  // 如果治疗池不够，就全用上，剩下的名额给DPS
+  // 2. 确定实际抽取的治疗和DPS数量
   const actualHealerCount = Math.min(healerCount, healerPool.length);
-  // 如果DPS池不够，可能需要重复抽取或者报错（这里假设池子足够大，或者允许重复？需求未明确，暂按不重复抽取实现，若池子不够则允许重复）
-  // 修正：通常抽奖转盘允许重复中奖吗？
-  // 需求描述：“结果总数 = 队员人数。结果中必须包含指定数量的“治疗”组心法，其余名额在选中的输出心法中随机。”
-  // 既然是给队员分配心法，通常意味着每个队员一个心法。
-  // 逻辑：
-  // a. 随机抽取 actualHealerCount 个治疗心法
-  // b. 随机抽取 (members.length - actualHealerCount) 个输出心法
-  // c. 将这些心法随机分配给 members
+  const dpsCountNeeded = members.length - actualHealerCount;
 
-  const results: LotteryResult[] = [];
-  const assignedMembers = [...members]; // 待分配的队员
-
-  // 辅助函数：从池中随机抽取N个（允许重复？通常心法分配不希望重复，除非池子太小）
-  // 这里采用：如果池子够大，不重复；不够大，则重置池子继续抽（即允许重复）
+  // 辅助函数：从池中随机抽取N个
   const drawFromPool = (pool: XinFa[], count: number): XinFa[] => {
     const drawn: XinFa[] = [];
     let currentPool = [...pool];
-    
     for (let i = 0; i < count; i++) {
-      if (currentPool.length === 0) {
-        currentPool = [...pool]; // 重置池子
-      }
+      if (currentPool.length === 0) currentPool = [...pool];
       const idx = Math.floor(Math.random() * currentPool.length);
       drawn.push(currentPool[idx]);
-      currentPool.splice(idx, 1); // 移除已抽取的
+      currentPool.splice(idx, 1);
     }
     return drawn;
   };
 
   // 3. 抽取心法
   const drawnHealers = drawFromPool(healerPool, actualHealerCount);
-  const dpsCountNeeded = members.length - actualHealerCount;
-  
-  // 如果DPS池为空但还需要抽取（极端情况：只选了治疗心法但要求人数 > 治疗数），则只能从治疗池补
   let drawnDps: XinFa[] = [];
   if (dpsPool.length > 0) {
     drawnDps = drawFromPool(dpsPool, dpsCountNeeded);
   } else if (dpsCountNeeded > 0) {
-    // 降级：从治疗池补足剩余名额
     drawnDps = drawFromPool(healerPool, dpsCountNeeded);
   }
 
-  const allDrawnXinFa = [...drawnHealers, ...drawnDps];
+  // 4. 分配心法
+  const finalAssignments = new Array(members.length).fill(null);
+  const availableHealers = [...drawnHealers];
+  const availableDps = [...drawnDps];
 
-  // 4. 随机打乱心法并分配给队员
-  // Fisher-Yates Shuffle
-  for (let i = allDrawnXinFa.length - 1; i > 0; i--) {
+  // a. 首先分配固定的治疗
+  fixedHealerIndices.forEach((memberIdx) => {
+    if (memberIdx < members.length && availableHealers.length > 0) {
+      finalAssignments[memberIdx] = availableHealers.pop();
+    }
+  });
+
+  // b. 找出剩余未分配的队员索引
+  const remainingMemberIndices = members
+    .map((_, i) => i)
+    .filter((i) => finalAssignments[i] === null);
+  
+  // 打乱剩余位置以实现随机分配
+  for (let i = remainingMemberIndices.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [allDrawnXinFa[i], allDrawnXinFa[j]] = [allDrawnXinFa[j], allDrawnXinFa[i]];
+    [remainingMemberIndices[i], remainingMemberIndices[j]] = [remainingMemberIndices[j], remainingMemberIndices[i]];
+  }
+
+  // c. 分配剩余的治疗到随机位置
+  while (availableHealers.length > 0 && remainingMemberIndices.length > 0) {
+    const memberIdx = remainingMemberIndices.shift()!;
+    finalAssignments[memberIdx] = availableHealers.pop();
+  }
+
+  // d. 分配DPS到剩下的位置
+  while (availableDps.length > 0 && remainingMemberIndices.length > 0) {
+    const memberIdx = remainingMemberIndices.shift()!;
+    finalAssignments[memberIdx] = availableDps.pop();
   }
 
   // 5. 组装结果
+  const results: LotteryResult[] = [];
   for (let i = 0; i < members.length; i++) {
-    if (i < allDrawnXinFa.length) {
+    if (finalAssignments[i]) {
       results.push({
-        id: allDrawnXinFa[i].id,
-        name: allDrawnXinFa[i].name,
-        image: allDrawnXinFa[i].image,
+        id: finalAssignments[i].id,
+        name: finalAssignments[i].name,
+        image: finalAssignments[i].image,
         memberId: members[i],
       });
     }

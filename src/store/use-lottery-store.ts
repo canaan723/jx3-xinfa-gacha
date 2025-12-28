@@ -22,6 +22,8 @@ interface LotteryState {
   setMembers: (members: string[]) => void;
   healerCount: number;
   setHealerCount: (count: number) => void;
+  fixedHealerIndices: number[];
+  toggleFixedHealer: (index: number) => void;
 
   // 自定义选项
   customOptions: string[];
@@ -72,9 +74,32 @@ export const useLotteryStore = create<LotteryState>()(
       deselectAll: () => set({ selectedXinFaIds: [] }),
 
       members: ['队友1', '队友2', '队友3'],
-      setMembers: (members) => set({ members }),
+      setMembers: (members) => set((state) => {
+        // 如果成员减少，需要过滤掉超出范围的固定索引
+        const fixedHealerIndices = state.fixedHealerIndices.filter(idx => idx < members.length);
+        return { members, fixedHealerIndices };
+      }),
       healerCount: 1,
-      setHealerCount: (count) => set({ healerCount: count }),
+      setHealerCount: (count) => set((state) => {
+        // 如果治疗人数减少，可能需要移除多余的固定名额
+        let fixedHealerIndices = state.fixedHealerIndices;
+        if (fixedHealerIndices.length > count) {
+          fixedHealerIndices = fixedHealerIndices.slice(0, count);
+        }
+        return { healerCount: count, fixedHealerIndices };
+      }),
+      fixedHealerIndices: [],
+      toggleFixedHealer: (index) => set((state) => {
+        const isFixed = state.fixedHealerIndices.includes(index);
+        if (isFixed) {
+          return { fixedHealerIndices: state.fixedHealerIndices.filter(i => i !== index) };
+        } else {
+          if (state.fixedHealerIndices.length < state.healerCount) {
+            return { fixedHealerIndices: [...state.fixedHealerIndices, index].sort((a, b) => a - b) };
+          }
+          return state;
+        }
+      }),
 
       customOptions: ['选项1', '选项2'],
       addCustomOption: (option) =>
@@ -124,7 +149,7 @@ export const useLotteryStore = create<LotteryState>()(
         if (state.mode === 'single') {
           result = drawSingle(selectedXinFa);
         } else if (state.mode === 'team') {
-          result = drawTeam(state.members, selectedXinFa, state.healerCount);
+          result = drawTeam(state.members, selectedXinFa, state.healerCount, state.fixedHealerIndices);
         } else if (state.mode === 'custom') {
           result = drawCustom(state.customOptions);
         }
@@ -140,6 +165,7 @@ export const useLotteryStore = create<LotteryState>()(
         selectedXinFaIds: state.selectedXinFaIds,
         members: state.members,
         healerCount: state.healerCount,
+        fixedHealerIndices: state.fixedHealerIndices,
         customOptions: state.customOptions,
       }),
     }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Settings, Users, User, Shuffle, X, Check, Search, Plus, Trash2 } from 'lucide-react';
+import { Settings, Users, User, Shuffle, X, Check, Search, Plus, Trash2, Heart } from 'lucide-react';
 import { useLotteryStore } from '@/store/use-lottery-store';
 import { ALL_XINFA, INTERNAL_DPS, EXTERNAL_DPS, HEALERS } from '@/lib/data';
 import { cn } from '@/lib/utils';
@@ -26,7 +26,9 @@ export default function ConfigPanel() {
     customOptions,
     addCustomOption,
     removeCustomOption,
-    isSpinning
+    isSpinning,
+    fixedHealerIndices,
+    toggleFixedHealer
   } = useLotteryStore();
 
   // 模式切换处理
@@ -334,13 +336,19 @@ export default function ConfigPanel() {
                           <span className="w-1.5 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full"></span>
                           队员名单 ({members.length})
                         </h3>
-                        <button 
-                          onClick={addMember}
-                          disabled={members.length >= 10}
-                          className="text-xs bg-brand/10 hover:bg-brand/20 text-brand border border-brand/30 px-4 py-2 rounded-xl flex items-center gap-1 disabled:opacity-50 font-bold transition-all"
-                        >
-                          <Plus className="w-3 h-3" /> 添加
-                        </button>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1.5 text-[10px] text-white/40 bg-white/5 px-2 py-1 rounded-lg border border-white/5">
+                            <span>点击爱心固定治疗位</span>
+                            <Heart className="w-3 h-3 fill-brand text-brand" />
+                          </div>
+                          <button 
+                            onClick={addMember}
+                            disabled={members.length >= 10}
+                            className="text-xs bg-brand/10 hover:bg-brand/20 text-brand border border-brand/30 px-4 py-2 rounded-xl flex items-center gap-1 disabled:opacity-50 font-bold transition-all"
+                          >
+                            <Plus className="w-3 h-3" /> 添加
+                          </button>
+                        </div>
                       </div>
                       
                       <div className="space-y-3">
@@ -353,6 +361,22 @@ export default function ConfigPanel() {
                               onChange={(e) => handleMemberChange(i, e.target.value)}
                               className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white font-medium focus:border-brand/50 focus:bg-white/10 outline-none transition-all"
                             />
+                            
+                            {/* 固定治疗勾选 */}
+                            <button
+                              onClick={() => toggleFixedHealer(i)}
+                              disabled={!fixedHealerIndices.includes(i) && fixedHealerIndices.length >= healerCount}
+                              className={cn(
+                                "p-2.5 rounded-xl transition-all border",
+                                fixedHealerIndices.includes(i)
+                                  ? "bg-brand/20 border-brand/50 text-brand shadow-[0_0_10px_rgba(var(--color-brand),0.2)]"
+                                  : "bg-white/5 border-white/10 text-white/20 hover:text-white/40 disabled:opacity-10 disabled:cursor-not-allowed"
+                              )}
+                              title={fixedHealerIndices.includes(i) ? "取消固定治疗" : "固定为此人抽取治疗心法"}
+                            >
+                              <Heart className={cn("w-4 h-4", fixedHealerIndices.includes(i) ? "fill-current" : "")} />
+                            </button>
+
                             <button
                               onClick={() => removeMember(i)}
                               disabled={members.length <= 1}
