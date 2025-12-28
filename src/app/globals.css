@@ -7,6 +7,9 @@
 @import '@chinese-fonts/hcqyt/dist/ChillRoundFRegular/result.css';
 
 @theme {
+  --font-sans: '寒蝉全圆体', 'Chill Round F', 'Douyin Sans Bold', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -110,7 +113,11 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Chill Round F', 'Douyin Sans Bold', sans-serif;
+    font-family: '寒蝉全圆体', 'Chill Round F', 'Douyin Sans Bold', sans-serif;
+  }
+  /* 确保输入框、按钮等元素也继承字体，并强制应用 */
+  input, button, textarea, select {
+    font-family: '寒蝉全圆体', 'Chill Round F', 'Douyin Sans Bold', sans-serif !important;
   }
   /* 抖音美好体用于标题 */
   h1, h2, h3, h4, h5, h6 {
