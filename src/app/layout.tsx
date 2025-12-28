@@ -13,6 +13,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
+      <head>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="6ee2ca0f-54a9-418c-aeb9-f4e8ad0ac89e"></script>
+      </head>
       <body className="antialiased overflow-hidden w-screen h-screen">
         {children}
       </body>
