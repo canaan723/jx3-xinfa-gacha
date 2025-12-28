@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "剑网3 心法转盘",
-  description: "剑网3心法抽奖转盘 - 内功、外功、治疗心法随机抽取",
+  title: "JX3 JJC心法盲盒",
+  description: "剑网3 JJC心法抽奖转盘 - 不管会不会，抽到什么打什么！为剑三JJC亲友娱乐局设计的随机心法抽签工具。",
 };
 
 export default function RootLayout({

@@ -1,14 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Share2, Download } from 'lucide-react';
+import { X, Share2, Download, Loader2 } from 'lucide-react';
+import { toPng } from 'html-to-image';
 import { useLotteryStore } from '@/store/use-lottery-store';
 import { LotteryResult } from '@/lib/logic';
 
 export default function ResultModal() {
   const { lastResult, resetResult, isSpinning } = useLotteryStore();
   const [show, setShow] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   // 监听结果变化，当有结果且不在旋转时显示
   useEffect(() => {
@@ -31,6 +34,39 @@ export default function ResultModal() {
 
   const results = Array.isArray(lastResult) ? lastResult : [lastResult];
 
+  const handleExportImage = async () => {
+    if (!modalRef.current || isExporting) return;
+
+    try {
+      setIsExporting(true);
+      
+      // 稍微等待一下，确保 DOM 渲染完全
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      const dataUrl = await toPng(modalRef.current, {
+        cacheBust: true,
+        backgroundColor: '#0a0a0a', // 确保背景不是透明的
+        style: {
+          borderRadius: '0', // 截图时去掉圆角，或者保持原样
+        },
+        filter: (node) => {
+          // 过滤掉关闭按钮和底部的操作按钮
+          const exclusionClasses = ['close-button', 'action-buttons'];
+          return !exclusionClasses.some(cls => (node as HTMLElement).classList?.contains(cls));
+        }
+      });
+
+      const link = document.createElement('a');
+      link.download = `jx3-lottery-result-${new Date().getTime()}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error('Failed to export image:', err);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <AnimatePresence>
       {show && (
@@ -46,6 +82,7 @@ export default function ResultModal() {
 
           {/* 弹窗主体 */}
           <motion.div
+            ref={modalRef}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -108,17 +145,35 @@ export default function ResultModal() {
                 ))}
               </div>
 
+              {/* 水印信息 - 仅在导出时或底部微弱显示 */}
+              <div className="mt-8 flex flex-col items-center gap-1 opacity-20">
+                <p className="text-[10px] text-white font-medium tracking-widest">
+                  https://jjc-gacha.qjyg.de
+                </p>
+                <p className="text-[10px] text-white font-medium">
+                  Created by @清绝
+                </p>
+              </div>
+
               {/* 底部按钮 */}
-              <div className="mt-12 flex gap-4">
+              <div className="mt-8 flex gap-4 action-buttons">
                 <button
                   onClick={handleClose}
                   className="px-10 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white font-bold transition-all active:scale-95"
                 >
                   关闭
                 </button>
-                {/* 预留分享功能 */}
-                <button className="px-10 py-3.5 rounded-full bg-gradient-to-r from-brand to-brand-secondary text-white font-black shadow-[0_10px_25px_-5px_rgba(var(--color-brand),0.3)] hover:shadow-[0_15px_35px_-5px_rgba(var(--color-brand),0.4)] transition-all active:scale-95 flex items-center gap-2">
-                  <Share2 className="w-4 h-4" /> 分享结果
+                <button
+                  onClick={handleExportImage}
+                  disabled={isExporting}
+                  className="px-10 py-3.5 rounded-full bg-gradient-to-r from-brand to-brand-secondary text-white font-black shadow-[0_10px_25px_-5px_rgba(var(--color-brand),0.3)] hover:shadow-[0_15px_35px_-5px_rgba(var(--color-brand),0.4)] transition-all active:scale-95 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isExporting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Share2 className="w-4 h-4" />
+                  )}
+                  {isExporting ? '正在生成...' : '分享结果'}
                 </button>
               </div>
             </div>
@@ -126,7 +181,7 @@ export default function ResultModal() {
             {/* 关闭按钮 */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/50 hover:text-white transition-colors close-button"
             >
               <X className="w-6 h-6" />
             </button>
