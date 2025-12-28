@@ -36,6 +36,10 @@ interface LotteryState {
   setIsSpinning: (isSpinning: boolean) => void;
   lastResult: LotteryResult | LotteryResult[] | null;
   
+  // UI 状态
+  isConfigOpen: boolean;
+  setIsConfigOpen: (isOpen: boolean) => void;
+
   // 背景
   currentBgId: string;
   setRandomBg: () => void;
@@ -113,6 +117,9 @@ export const useLotteryStore = create<LotteryState>()(
       isSpinning: false,
       setIsSpinning: (isSpinning) => set({ isSpinning }),
       lastResult: null,
+
+      isConfigOpen: false,
+      setIsConfigOpen: (isOpen) => set({ isConfigOpen: isOpen }),
 
       currentBgId: 'cg', // 默认
       setRandomBg: () => {

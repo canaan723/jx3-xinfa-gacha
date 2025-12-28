@@ -8,10 +8,11 @@ import { ALL_XINFA, INTERNAL_DPS, EXTERNAL_DPS, HEALERS } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
 export default function ConfigPanel() {
-  const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'mode' | 'xinfa' | 'team'>('mode');
 
   const {
+    isConfigOpen: isOpen,
+    setIsConfigOpen: setIsOpen,
     mode,
     setMode,
     selectedXinFaIds,
@@ -116,15 +117,7 @@ export default function ConfigPanel() {
 
   return (
     <>
-      {/* 悬浮按钮 - 高级毛玻璃 */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        className="fixed top-6 right-6 z-40 p-3 rounded-full glass-button text-white"
-        whileHover={{ rotate: 90, scale: 1.1 }}
-        disabled={isSpinning}
-      >
-        <Settings className="w-6 h-6" />
-      </motion.button>
+      {/* 移除原有的固定悬浮按钮，改为在页面中调用 */}
 
       {/* 侧边面板 */}
       <AnimatePresence>
