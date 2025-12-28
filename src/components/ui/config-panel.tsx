@@ -264,8 +264,8 @@ export default function ConfigPanel() {
                     <div className="flex justify-between items-center mb-6 sticky top-0 bg-black/40 backdrop-blur-xl py-3 z-10 -mx-2 px-2 rounded-b-xl">
                        <span className="text-white/70 text-xs font-bold uppercase tracking-widest">已选: {selectedXinFaIds.length}</span>
                        <div className="flex gap-2">
-                         <button onClick={selectAll} className="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg uppercase transition-all">全选</button>
-                         <button onClick={deselectAll} className="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg uppercase transition-all">清空</button>
+                         <button onClick={selectAll} className="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg transition-all">全选</button>
+                         <button onClick={deselectAll} className="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg transition-all">清空</button>
                        </div>
                     </div>
                     

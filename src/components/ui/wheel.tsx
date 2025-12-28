@@ -214,20 +214,33 @@ export default function Wheel() {
           </div>
         </div>
         
-        {/* 正在抽取的提示 */}
+        {/* 正在抽取的提示 - 重新设计：精致胶囊毛玻璃风格 */}
         <AnimatePresence>
           {spinningTarget && (
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.9 }}
-              className="absolute top-28 md:top-40 left-1/2 -translate-x-1/2 whitespace-nowrap glass-morphism px-8 py-3 rounded-2xl text-white"
+              exit={{ opacity: 0, y: -5, scale: 0.95 }}
+              className="absolute top-24 md:top-36 left-1/2 -translate-x-1/2 whitespace-nowrap z-50"
             >
-              <div className="flex flex-col items-center gap-1">
-                <span className="text-[10px] text-white/60 uppercase tracking-[0.2em] font-bold">Drawing</span>
-                <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-brand to-brand-secondary bg-clip-text text-transparent drop-shadow-sm">
-                  {spinningTarget}
-                </span>
+              <div className="relative px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_20px_-5px_rgba(0,0,0,0.3)] flex items-center gap-3 overflow-hidden">
+                {/* 内部微弱渐变背景 */}
+                <div className="absolute inset-0 bg-gradient-to-r from-brand/5 to-brand-secondary/5" />
+                
+                {/* 状态指示点 */}
+                <div className="relative w-1.5 h-1.5 rounded-full bg-brand shadow-[0_0_8px_var(--brand)]">
+                  <div className="absolute inset-0 rounded-full bg-brand animate-ping opacity-40" />
+                </div>
+
+                <div className="flex items-baseline gap-2 relative z-10">
+                  <span className="text-[10px] text-white/40 font-bold uppercase tracking-widest">正在抽取</span>
+                  <span className="text-lg md:text-xl font-black text-white tracking-tight">
+                    {spinningTarget}
+                  </span>
+                </div>
+
+                {/* 极细扫光动画 */}
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
               </div>
             </motion.div>
           )}
