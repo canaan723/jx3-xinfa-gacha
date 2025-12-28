@@ -141,3 +141,18 @@
 @utility text-shadow-sm {
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
+
+/* View Transition Reveal 动效 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}

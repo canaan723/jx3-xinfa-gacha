@@ -17,7 +17,7 @@ export default function BackgroundManager() {
   return (
     <div className="fixed inset-0 -z-10 w-full h-full overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
+        className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${currentBg.src})` }}
       />
       {/* 叠加层，增加文字可读性和统一色调 */}

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ALL_XINFA, BACKGROUNDS, XinFa } from '@/lib/data';
 import { drawSingle, drawTeam, drawCustom, LotteryResult } from '@/lib/logic';
+import { safeViewTransition } from '@/lib/utils';
 
 export type LotteryMode = 'single' | 'team' | 'custom';
 
@@ -42,8 +43,8 @@ interface LotteryState {
 
   // 背景
   currentBgId: string;
-  setRandomBg: () => void;
-  setNextBg: () => void;
+  setRandomBg: (event?: React.MouseEvent | MouseEvent) => void;
+  setNextBg: (event?: React.MouseEvent | MouseEvent) => void;
 
   // 动作
   startLottery: () => void;
@@ -122,29 +123,34 @@ export const useLotteryStore = create<LotteryState>()(
       setIsConfigOpen: (isOpen) => set({ isConfigOpen: isOpen }),
 
       currentBgId: 'cg', // 默认
-      setRandomBg: () => {
+      setRandomBg: (event) => {
         const randomBg = BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
-        set({ currentBgId: randomBg.id });
-        // 设置 CSS 变量
-        if (typeof document !== 'undefined') {
-          document.documentElement.style.setProperty('--brand', randomBg.theme);
-          document.documentElement.style.setProperty('--brand-secondary', randomBg.themeSecondary);
-        }
+        
+        safeViewTransition(() => {
+          set({ currentBgId: randomBg.id });
+          // 设置 CSS 变量
+          if (typeof document !== 'undefined') {
+            document.documentElement.style.setProperty('--brand', randomBg.theme);
+            document.documentElement.style.setProperty('--brand-secondary', randomBg.themeSecondary);
+          }
+        }, event);
       },
 
-      setNextBg: () => {
+      setNextBg: (event) => {
         const { currentBgId } = get();
         const currentIndex = BACKGROUNDS.findIndex((b) => b.id === currentBgId);
         const nextIndex = (currentIndex + 1) % BACKGROUNDS.length;
         const nextBg = BACKGROUNDS[nextIndex];
 
-        set({ currentBgId: nextBg.id });
+        safeViewTransition(() => {
+          set({ currentBgId: nextBg.id });
 
-        // 设置 CSS 变量
-        if (typeof document !== 'undefined') {
-          document.documentElement.style.setProperty('--brand', nextBg.theme);
-          document.documentElement.style.setProperty('--brand-secondary', nextBg.themeSecondary);
-        }
+          // 设置 CSS 变量
+          if (typeof document !== 'undefined') {
+            document.documentElement.style.setProperty('--brand', nextBg.theme);
+            document.documentElement.style.setProperty('--brand-secondary', nextBg.themeSecondary);
+          }
+        }, event);
       },
 
       startLottery: () => {

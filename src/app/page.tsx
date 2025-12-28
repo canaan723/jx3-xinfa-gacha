@@ -29,7 +29,7 @@ export default function Home() {
         {/* 左侧：功能按钮 */}
         <div className="flex-1 flex justify-start">
           <button
-            onClick={setNextBg}
+            onClick={(e) => setNextBg(e)}
             className="pointer-events-auto p-2.5 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 transition-all active:scale-90 group"
             title="切换背景"
           >
