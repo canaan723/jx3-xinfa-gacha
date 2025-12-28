@@ -137,7 +137,7 @@ export default function Wheel() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-6 h-16 flex flex-col items-center pointer-events-none">
         {/* 顶部固定基座 */}
         <div className="w-3 h-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md z-50 flex items-center justify-center shadow-lg">
-          <div className="w-1 h-1 rounded-full bg-brand shadow-[0_0_8px_var(--brand)]" />
+          <div className="w-1 h-1 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)]" />
         </div>
 
         {/* 指针主体：锋利的三角形棱镜 */}
@@ -162,7 +162,7 @@ export default function Wheel() {
         <div className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_10px_#fff] z-50" />
         
         {/* 底部环境光 */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand/10 blur-xl rounded-full -z-10" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-t from-brand/20 to-transparent blur-xl rounded-full -z-10" />
       </div>
 
       {/* 转盘主体 - 增强毛玻璃 */}
@@ -212,7 +212,7 @@ export default function Wheel() {
       {/* 中心装饰 - 高级毛玻璃便当盒 */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 z-30 flex items-center justify-center pointer-events-none">
         {/* 外层发光 */}
-        <div className="absolute inset-0 rounded-full bg-brand/20 blur-2xl animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand/20 to-brand-secondary/20 blur-2xl animate-pulse" />
         
         {/* 多层嵌套圆环 */}
         <div className="absolute inset-0 rounded-full bg-white/5 backdrop-blur-3xl border border-white/20 shadow-2xl flex items-center justify-center">
@@ -239,8 +239,8 @@ export default function Wheel() {
                 <div className="absolute inset-0 bg-gradient-to-r from-brand/5 to-brand-secondary/5" />
                 
                 {/* 状态指示点 */}
-                <div className="relative w-1.5 h-1.5 rounded-full bg-brand shadow-[0_0_8px_var(--brand)]">
-                  <div className="absolute inset-0 rounded-full bg-brand animate-ping opacity-40" />
+                <div className="relative w-1.5 h-1.5 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)]">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand to-brand-secondary animate-ping opacity-40" />
                 </div>
 
                 <div className="flex items-baseline gap-2 relative z-10">

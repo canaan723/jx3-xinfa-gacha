@@ -53,7 +53,7 @@ export default function ResultModal() {
             className="relative w-full max-w-2xl bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl overflow-hidden"
           >
             {/* 装饰光效 - 顶部主题色光晕 */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-48 bg-brand/20 blur-[120px] pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-48 bg-gradient-to-b from-brand/20 to-transparent blur-[120px] pointer-events-none" />
             
             {/* 内部微弱渐变背景 */}
             <div className="absolute inset-0 bg-gradient-to-b from-brand/5 via-transparent to-brand-secondary/5 pointer-events-none" />

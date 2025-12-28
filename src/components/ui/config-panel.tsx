@@ -75,7 +75,7 @@ export default function ConfigPanel() {
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <div className="w-1 h-3 bg-brand/50 rounded-full" />
+            <div className="w-1 h-3 bg-gradient-to-b from-brand to-brand-secondary rounded-full" />
             <h3 className="text-white/90 font-bold text-sm">{title}</h3>
           </div>
           <button
@@ -226,7 +226,7 @@ export default function ConfigPanel() {
                             <p className="text-white/40 text-xs">{m.desc}</p>
                           </div>
                           {mode === m.id && (
-                            <div className="ml-auto relative z-10 w-6 h-6 rounded-full bg-brand/20 flex items-center justify-center border border-brand/50">
+                            <div className="ml-auto relative z-10 w-6 h-6 rounded-full bg-gradient-to-br from-brand/20 to-brand-secondary/20 flex items-center justify-center border border-brand/50">
                               <Check className="text-brand w-4 h-4" />
                             </div>
                           )}
@@ -283,7 +283,7 @@ export default function ConfigPanel() {
                     {/* 已选吸顶组件 - 重新设计：浅色高不透明度、更薄 */}
                     <div className="flex justify-between items-center mb-4 sticky top-0 bg-white/20 backdrop-blur-2xl py-2 z-10 -mx-2 px-4 rounded-xl border border-white/20 shadow-xl">
                        <div className="flex items-center gap-2">
-                         <div className="w-1 h-3 bg-brand rounded-full" />
+                         <div className="w-1 h-3 bg-gradient-to-b from-brand to-brand-secondary rounded-full" />
                          <span className="text-white font-bold text-[10px] uppercase tracking-widest">已选: {selectedXinFaIds.length}</span>
                        </div>
                        <div className="flex gap-1.5">
