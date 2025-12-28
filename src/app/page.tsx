@@ -61,53 +61,53 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 主体内容：转盘 */}
-      <div className="absolute inset-0 flex flex-col items-center justify-start z-10 pt-[20vh]">
-        <div className="mb-12 md:mb-12 scale-90 md:scale-100 transition-transform">
+      {/* 主体内容：转盘 - 居中偏上布局 */}
+      <div className="absolute inset-0 flex items-center justify-center z-10 pb-[10vh]">
+        <div className="scale-90 md:scale-100 transition-transform">
            <Wheel />
         </div>
+      </div>
 
-        {/* 底部操作栏：开始按钮 + 配置按钮 */}
-        <div className="flex items-center gap-4">
-          {/* 开始按钮 - 重新设计：精致大圆角毛玻璃风格 */}
-          <button
-            onClick={startLottery}
-            disabled={isSpinning}
-            className={cn(
-              "group relative px-10 py-3 rounded-full transition-all duration-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden",
-              "bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]",
-              !isSpinning && "hover:bg-white/10 hover:border-white/40 hover:shadow-[0_15px_35px_-5px_var(--brand)]/20"
+      {/* 底部操作栏：固定在页脚上方 */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 w-full max-w-fit px-6">
+        {/* 开始按钮 - 重新设计：精致大圆角毛玻璃风格 */}
+        <button
+          onClick={startLottery}
+          disabled={isSpinning}
+          className={cn(
+            "group relative px-6 md:px-10 py-3 rounded-full transition-all duration-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden flex-shrink-0",
+            "bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]",
+            !isSpinning && "hover:bg-white/10 hover:border-white/40 hover:shadow-[0_15px_35px_-5px_var(--brand)]/20"
+          )}
+        >
+          {/* 极简背景渐变 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-brand-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <span className="relative z-10 flex items-center gap-2 text-base md:text-lg font-bold tracking-widest text-white/90 group-hover:text-white transition-colors whitespace-nowrap">
+            {isSpinning ? (
+              <RefreshCcw className="w-4 h-4 animate-spin text-brand" />
+            ) : (
+              <div className="w-2 h-2 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
             )}
-          >
-            {/* 极简背景渐变 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-brand-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            <span className="relative z-10 flex items-center gap-2 text-lg font-bold tracking-widest text-white/90 group-hover:text-white transition-colors">
-              {isSpinning ? (
-                <RefreshCcw className="w-4 h-4 animate-spin text-brand" />
-              ) : (
-                <div className="w-2 h-2 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
-              )}
-              {isSpinning ? '抽取中' : mode === 'team' ? '开始队伍抽签' : mode === 'single' ? '开始个人抽签' : '开始自定义抽签'}
-            </span>
+            {isSpinning ? '抽取中' : mode === 'team' ? '开始队伍抽签' : mode === 'single' ? '开始个人抽签' : '开始自定义抽签'}
+          </span>
 
-            {/* 极细扫光 */}
-            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[2s] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          </button>
+          {/* 极细扫光 */}
+          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[2s] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </button>
 
-          {/* 配置按钮 - 与开始按钮视觉和谐 */}
-          <button
-            onClick={() => setIsConfigOpen(true)}
-            disabled={isSpinning}
-            className={cn(
-              "p-3.5 rounded-full transition-all duration-500 active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed",
-              "bg-white/5 backdrop-blur-xl border border-white/20 shadow-lg text-white/60 hover:text-white hover:bg-white/10 hover:border-white/40 group"
-            )}
-            title="抽签配置"
-          >
-            <Settings className="w-6 h-6 group-hover:rotate-90 transition-transform duration-500" />
-          </button>
-        </div>
+        {/* 配置按钮 - 与开始按钮视觉和谐 */}
+        <button
+          onClick={() => setIsConfigOpen(true)}
+          disabled={isSpinning}
+          className={cn(
+            "p-3.5 rounded-full transition-all duration-500 active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed",
+            "bg-white/5 backdrop-blur-xl border border-white/20 shadow-lg text-white/60 hover:text-white hover:bg-white/10 hover:border-white/40 group"
+          )}
+          title="抽签配置"
+        >
+          <Settings className="w-6 h-6 group-hover:rotate-90 transition-transform duration-500" />
+        </button>
       </div>
 
       {/* 功能组件 */}

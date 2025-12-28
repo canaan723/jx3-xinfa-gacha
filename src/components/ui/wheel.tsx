@@ -112,8 +112,8 @@ export default function Wheel() {
   // 根据选项数量动态计算图标大小
   const getIconSize = () => {
     const count = items.length;
-    if (count <= 6) return 'w-12 h-12 md:w-14 md:h-14';
-    if (count <= 12) return 'w-10 h-10 md:w-12 md:h-12';
+    if (count <= 6) return 'w-12 h-12 md:w-16 md:h-16';
+    if (count <= 12) return 'w-10 h-10 md:w-14 md:h-14';
     if (count <= 20) return 'w-8 h-8 md:w-10 md:h-10';
     return 'w-6 h-6 md:w-8 md:h-8';
   };
@@ -123,16 +123,16 @@ export default function Wheel() {
   // 根据选项数量动态计算文字大小
   const getTextSize = () => {
     const count = items.length;
-    if (count <= 6) return 'text-[10px] md:text-sm';
-    if (count <= 12) return 'text-[9px] md:text-xs';
-    if (count <= 20) return 'text-[8px] md:text-[10px]';
-    return 'text-[7px] md:text-[9px]';
+    if (count <= 6) return 'text-[10px] md:text-base';
+    if (count <= 12) return 'text-[9px] md:text-sm';
+    if (count <= 20) return 'text-[8px] md:text-xs';
+    return 'text-[7px] md:text-[10px]';
   };
 
   const textSizeClass = getTextSize();
 
   return (
-    <div className="relative flex items-center justify-center w-[340px] h-[340px] md:w-[500px] md:h-[500px]">
+    <div className="relative flex items-center justify-center w-[350px] h-[350px] md:w-[580px] md:h-[580px]">
       {/* 指针 - 重新设计：高级水晶棱镜指针（缩小版） */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-6 h-16 flex flex-col items-center pointer-events-none">
         {/* 顶部固定基座 */}
@@ -186,7 +186,7 @@ export default function Wheel() {
               
               {/* 内容容器 */}
               <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-4 md:pt-6 origin-bottom"
+                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-4 md:pt-8 origin-bottom"
                 style={{ transform: `rotate(${anglePerSector / 2}deg)` }}
               >
                 <div className="flex flex-col items-center gap-1 md:gap-1.5">
@@ -213,7 +213,7 @@ export default function Wheel() {
       </motion.div>
 
       {/* 中心装饰 - 高级毛玻璃便当盒 */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 z-30 flex items-center justify-center pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-36 md:h-36 z-30 flex items-center justify-center pointer-events-none">
         {/* 外层发光 */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand/20 to-brand-secondary/20 blur-2xl animate-pulse" />
         
@@ -235,7 +235,7 @@ export default function Wheel() {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -5, scale: 0.95 }}
-              className="absolute top-24 md:top-36 left-1/2 -translate-x-1/2 whitespace-nowrap z-50"
+              className="absolute top-28 md:top-40 left-1/2 -translate-x-1/2 whitespace-nowrap z-50"
             >
               <div className="relative px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_20px_-5px_rgba(0,0,0,0.3)] flex items-center gap-3 overflow-hidden">
                 {/* 内部微弱渐变背景 */}
