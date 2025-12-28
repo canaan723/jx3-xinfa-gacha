@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Share2, Download, Loader2 } from 'lucide-react';
 import { toPng } from 'html-to-image';
+import { cn } from '@/lib/utils';
 import { useLotteryStore } from '@/store/use-lottery-store';
 import { LotteryResult } from '@/lib/logic';
 
@@ -110,7 +111,10 @@ export default function ResultModal() {
               </div>
 
               {/* 结果列表 */}
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+              <div className={cn(
+                "w-full grid gap-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent",
+                results.length === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-2"
+              )}>
                 {results.map((res, index) => (
                   <motion.div
                     key={index}
