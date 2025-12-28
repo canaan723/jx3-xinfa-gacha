@@ -46,21 +46,30 @@ export default function Home() {
            <Wheel />
         </div>
 
-        {/* 开始按钮 */}
+        {/* 开始按钮 - 重新设计：精致大圆角毛玻璃风格 */}
         <button
           onClick={startLottery}
           disabled={isSpinning}
           className={cn(
-            "group relative px-12 py-4 bg-brand hover:bg-brand-secondary text-white text-xl font-bold rounded-full shadow-[0_0_20px_var(--brand)]/40 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 overflow-hidden",
-            isSpinning && "opacity-50 cursor-not-allowed"
+            "group relative px-10 py-3 rounded-full transition-all duration-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden",
+            "bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]",
+            !isSpinning && "hover:bg-white/10 hover:border-white/40 hover:shadow-[0_15px_35px_-5px_var(--brand)]/20"
           )}
         >
-          <span className="relative z-10 flex items-center gap-2">
-            {isSpinning ? '抽奖中...' : mode === 'team' ? '开始队伍分配' : '开始抽签'}
-            {!isSpinning && <Play className="w-5 h-5 fill-current" />}
+          {/* 极简背景渐变 */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-brand-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <span className="relative z-10 flex items-center gap-2 text-lg font-bold tracking-widest text-white/90 group-hover:text-white transition-colors">
+            {isSpinning ? (
+              <RefreshCcw className="w-4 h-4 animate-spin text-brand" />
+            ) : (
+              <div className="w-2 h-2 rounded-full bg-brand shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
+            )}
+            {isSpinning ? '抽奖中' : mode === 'team' ? '开始分配' : '开始抽签'}
           </span>
-          {/* 光效扫过动画 */}
-          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
+
+          {/* 极细扫光 */}
+          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[2s] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </button>
       </div>
 
