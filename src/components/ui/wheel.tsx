@@ -112,16 +112,27 @@ export default function Wheel() {
   // 根据选项数量动态计算图标大小
   const getIconSize = () => {
     const count = items.length;
-    if (count <= 6) return 'w-14 h-14 md:w-20 md:h-20';
-    if (count <= 12) return 'w-12 h-12 md:w-16 md:h-16';
-    if (count <= 20) return 'w-10 h-10 md:w-14 md:h-14';
-    return 'w-8 h-8 md:w-12 md:h-12';
+    if (count <= 6) return 'w-16 h-16 md:w-20 md:h-20';
+    if (count <= 12) return 'w-14 h-14 md:w-16 md:h-16';
+    if (count <= 20) return 'w-12 h-12 md:w-14 md:h-14';
+    return 'w-10 h-10 md:w-12 md:h-12';
   };
 
   const iconSizeClass = getIconSize();
 
+  // 根据选项数量动态计算文字大小
+  const getTextSize = () => {
+    const count = items.length;
+    if (count <= 6) return 'text-xs md:text-base';
+    if (count <= 12) return 'text-[10px] md:text-sm';
+    if (count <= 20) return 'text-[9px] md:text-xs';
+    return 'text-[8px] md:text-[10px]';
+  };
+
+  const textSizeClass = getTextSize();
+
   return (
-    <div className="relative flex items-center justify-center w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
+    <div className="relative flex items-center justify-center w-[340px] h-[340px] md:w-[500px] md:h-[500px]">
       {/* 指针 - 重新设计：高级水晶棱镜指针（缩小版） */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-6 h-16 flex flex-col items-center pointer-events-none">
         {/* 顶部固定基座 */}
@@ -175,10 +186,10 @@ export default function Wheel() {
               
               {/* 内容容器 */}
               <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-4 md:pt-8 origin-bottom"
+                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-6 md:pt-8 origin-bottom"
                 style={{ transform: `rotate(${anglePerSector / 2}deg)` }}
               >
-                <div className="flex flex-col items-center gap-1 md:gap-3">
+                <div className="flex flex-col items-center gap-2 md:gap-3">
                   {item.image ? (
                     <div className={cn(iconSizeClass, "rounded-full p-1 bg-white/5 backdrop-blur-sm border border-white/10 shadow-inner")}>
                       <img src={item.image} alt={item.name} className="w-full h-full object-contain drop-shadow-md" />
@@ -188,7 +199,7 @@ export default function Wheel() {
                       {item.name.slice(0, 2)}
                     </div>
                   )}
-                  <span className="text-white text-[10px] md:text-sm font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap tracking-wider">
+                  <span className={cn("text-white font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap tracking-wider", textSizeClass)}>
                     {item.name}
                   </span>
                 </div>

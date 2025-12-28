@@ -42,7 +42,7 @@ export default function Home() {
 
       {/* 主体内容：转盘 */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-        <div className="mb-8 md:mb-12 scale-75 md:scale-100 transition-transform">
+        <div className="mb-8 md:mb-12 scale-90 md:scale-100 transition-transform">
            <Wheel />
         </div>
 
