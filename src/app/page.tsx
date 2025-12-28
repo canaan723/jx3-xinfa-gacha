@@ -20,7 +20,7 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden text-white font-sans">
+    <main className="relative w-screen h-[100dvh] overflow-hidden text-white font-sans">
       {/* 动态背景 */}
       <BackgroundManager />
 
@@ -115,8 +115,18 @@ export default function Home() {
       <ResultModal />
 
       {/* 底部版权/信息 */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs text-center z-20 pointer-events-none">
-        <p>JX3 JJC心法盲盒 © 2025 | 仅供娱乐</p>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-full px-4 text-white/40 text-xs text-center z-20">
+        <p className="max-w-md mx-auto leading-relaxed">
+          JX3 JJC心法盲盒 © 2025 | 仅供娱乐 | Made by{' '}
+          <a
+            href="https://blog.qjyg.de"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors underline underline-offset-2"
+          >
+            清绝
+          </a>
+        </p>
       </div>
     </main>
   );
