@@ -88,7 +88,7 @@ export default function Home() {
               ) : (
                 <div className="w-2 h-2 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
               )}
-              {isSpinning ? '抽奖中' : mode === 'team' ? '开始分配' : '开始抽签'}
+              {isSpinning ? '抽取中' : mode === 'team' ? '开始队伍抽签' : mode === 'single' ? '开始个人抽签' : '开始自定义抽签'}
             </span>
 
             {/* 极细扫光 */}
