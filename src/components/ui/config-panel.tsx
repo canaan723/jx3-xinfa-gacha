@@ -68,12 +68,28 @@ export default function ConfigPanel() {
     }
   };
 
+  // 动画变体
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   // 心法分组渲染
   const renderXinFaGroup = (title: string, list: typeof ALL_XINFA) => {
     const allSelected = list.every(x => selectedXinFaIds.includes(x.id));
     
     return (
-      <div className="mb-4">
+      <motion.div variants={itemVariants} className="mb-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <div className="w-1 h-3 bg-gradient-to-b from-brand to-brand-secondary rounded-full" />
@@ -111,7 +127,7 @@ export default function ConfigPanel() {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
     );
   };
 
@@ -182,22 +198,29 @@ export default function ConfigPanel() {
               </div>
 
               {/* 内容区域 - 滚动 */}
-              <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+              <motion.div
+                key={activeTab}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
+              >
                 
                 {/* 模式选择 */}
                 {activeTab === 'mode' && (
-                  <div className="space-y-6">
+                  <motion.div variants={containerVariants} className="space-y-6">
                     <div className="grid grid-cols-1 gap-4">
                       {[
                         { id: 'single', title: '个人抽签', desc: '单人随机抽取心法', icon: User },
                         { id: 'team', title: '队伍抽签', desc: '根据队员人数和治疗需求自动分配', icon: Users },
                         { id: 'custom', title: '自定义抽签', desc: '自定义选项进行抽取', icon: Settings },
                       ].map((m) => (
-                        <button
+                        <motion.button
+                          variants={itemVariants}
                           key={m.id}
                           onClick={() => handleModeChange(m.id as any)}
                           className={cn(
-                            "flex items-center gap-4 p-5 rounded-[24px] border transition-all duration-500 text-left group relative overflow-hidden",
+                            "flex items-center gap-4 p-5 rounded-[24px] border transition-all duration-500 text-left group relative overflow-hidden w-full",
                             mode === m.id
                               ? "bg-white/10 border-brand/50 shadow-[0_0_30px_rgba(var(--color-brand),0.15)]"
                               : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20"
@@ -223,13 +246,13 @@ export default function ConfigPanel() {
                               <Check className="text-brand w-4 h-4" />
                             </div>
                           )}
-                        </button>
+                        </motion.button>
                       ))}
                     </div>
 
                     {/* 自定义模式的选项配置 */}
                     {mode === 'custom' && (
-                      <div className="mt-6 pt-6 border-t border-white/10 animate-in fade-in slide-in-from-bottom-4">
+                      <motion.div variants={itemVariants} className="mt-6 pt-6 border-t border-white/10">
                         <h3 className="text-white font-bold mb-4">自定义选项 ({customOptions.length})</h3>
                         
                         <div className="flex gap-2 mb-4">
@@ -265,16 +288,16 @@ export default function ConfigPanel() {
                             <div className="text-center text-white/30 py-8 italic">暂无选项，请添加</div>
                           )}
                         </div>
-                      </div>
+                    </motion.div>
                     )}
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* 心法选择 */}
                 {activeTab === 'xinfa' && (
-                  <div className="animate-in fade-in slide-in-from-right-4">
+                  <motion.div variants={containerVariants}>
                     {/* 已选吸顶组件 - 重新设计：浅色高不透明度、更薄 */}
-                    <div className="flex justify-between items-center mb-4 sticky top-0 bg-white/20 backdrop-blur-2xl py-2 z-10 -mx-2 px-4 rounded-xl border border-white/20 shadow-xl">
+                    <motion.div variants={itemVariants} className="flex justify-between items-center mb-4 sticky top-0 bg-white/20 backdrop-blur-2xl py-2 z-10 -mx-2 px-4 rounded-xl border border-white/20 shadow-xl">
                        <div className="flex items-center gap-2">
                          <div className="w-1 h-3 bg-gradient-to-b from-brand to-brand-secondary rounded-full" />
                          <span className="text-white font-bold text-[10px] uppercase tracking-widest">已选: {selectedXinFaIds.length}</span>
@@ -283,20 +306,20 @@ export default function ConfigPanel() {
                          <button onClick={selectAll} className="text-[10px] font-bold bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg transition-all">全选</button>
                          <button onClick={deselectAll} className="text-[10px] font-bold bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg transition-all">清空</button>
                        </div>
-                    </div>
+                    </motion.div>
                     
                     <div className="space-y-2">
                       {renderXinFaGroup('内功输出', INTERNAL_DPS)}
                       {renderXinFaGroup('外功输出', EXTERNAL_DPS)}
                       {renderXinFaGroup('治疗心法', HEALERS)}
                     </div>
-                  </div>
+                  </motion.div>
                 )}
 
                 {/* 队伍设置 */}
                 {activeTab === 'team' && (
-                  <div className="space-y-8 animate-in fade-in slide-in-from-right-4">
-                    <div>
+                  <motion.div variants={containerVariants} className="space-y-8">
+                    <motion.div variants={itemVariants}>
                       <h3 className="text-white font-black mb-4 flex items-center gap-2">
                         <span className="w-1.5 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full"></span>
                         治疗配置
@@ -321,9 +344,9 @@ export default function ConfigPanel() {
                           <span>5</span>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <div>
+                    <motion.div variants={itemVariants}>
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-white font-black flex items-center gap-2">
                           <span className="w-1.5 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full"></span>
@@ -384,10 +407,10 @@ export default function ConfigPanel() {
                           </motion.button>
                         )}
                       </div>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}

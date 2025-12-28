@@ -191,9 +191,12 @@ export default function Wheel() {
               >
                 <div className="flex flex-col items-center gap-1 md:gap-1.5">
                   {item.image ? (
-                    <div className={cn(iconSizeClass, "flex items-center justify-center")}>
+                    <motion.div
+                      layoutId={`xinfa-icon-${item.id}`}
+                      className={cn(iconSizeClass, "flex items-center justify-center")}
+                    >
                       <img src={item.image} alt={item.name} className="w-full h-full object-contain drop-shadow-md" />
-                    </div>
+                    </motion.div>
                   ) : (
                     <div className={cn(iconSizeClass, "rounded-full flex items-center justify-center text-xs text-center p-1 bg-white/10 backdrop-blur-md border border-white/20")}>
                       {item.name.slice(0, 2)}
