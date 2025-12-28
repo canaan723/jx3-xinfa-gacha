@@ -199,7 +199,10 @@ export default function Wheel() {
                       {item.name.slice(0, 2)}
                     </div>
                   )}
-                  <span className={cn("text-white font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap tracking-wider", textSizeClass)}>
+                  <span 
+                    className={cn("text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap tracking-wider", textSizeClass)}
+                    style={{ fontFamily: "'Chill Round F', sans-serif" }}
+                  >
                     {item.name}
                   </span>
                 </div>
