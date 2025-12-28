@@ -28,7 +28,7 @@ export default function Home() {
       <div className="absolute top-0 left-0 w-full p-6 z-20 flex justify-between items-center pointer-events-none">
         <div className="pointer-events-auto flex gap-4">
           <h1 className="text-2xl md:text-3xl font-bold tracking-wider drop-shadow-md font-display">
-            剑网3心法转盘
+            JX3 JJC心法盲盒
           </h1>
           <button 
             onClick={setNextBg}
@@ -79,7 +79,7 @@ export default function Home() {
 
       {/* 底部版权/信息 */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs text-center z-20 pointer-events-none">
-        <p>剑网3心法转盘 © 2025 | 仅供娱乐</p>
+        <p>JX3 JJC心法盲盒 © 2025 | 仅供娱乐</p>
       </div>
     </main>
   );

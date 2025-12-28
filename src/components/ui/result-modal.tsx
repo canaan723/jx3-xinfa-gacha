@@ -67,9 +67,9 @@ export default function ResultModal() {
                   className="w-16 h-1 bg-gradient-to-r from-transparent via-brand to-transparent rounded-full mb-6"
                 />
                 <h2 className="text-3xl md:text-5xl font-black text-white mb-3 tracking-tighter drop-shadow-2xl">
-                  🎉 中奖结果 🎉
+                  就决定是你了！
                 </h2>
-                <p className="text-white/40 font-bold tracking-widest uppercase text-xs">恭喜以上少侠获得心法</p>
+                <p className="text-white/40 font-bold tracking-widest uppercase text-xs">恭喜侠士，加油喔！</p>
               </div>
 
               {/* 结果列表 */}
