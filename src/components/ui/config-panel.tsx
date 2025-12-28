@@ -70,12 +70,15 @@ export default function ConfigPanel() {
     const allSelected = list.every(x => selectedXinFaIds.includes(x.id));
     
     return (
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-white font-bold text-lg">{title}</h3>
-          <button 
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="w-1 h-4 bg-brand/50 rounded-full" />
+            <h3 className="text-white font-bold text-lg">{title}</h3>
+          </div>
+          <button
             onClick={() => toggleCategory(list[0].type, !allSelected)}
-            className="text-xs text-white/70 hover:text-white bg-white/10 px-2 py-1 rounded"
+            className="text-[10px] font-bold text-white/50 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1 rounded-full transition-all"
           >
             {allSelected ? '全不选' : '全选'}
           </button>
@@ -86,9 +89,9 @@ export default function ConfigPanel() {
               key={xf.id}
               onClick={() => toggleXinFa(xf.id)}
               className={cn(
-                "relative group flex flex-col items-center p-2 rounded-xl transition-all duration-200",
+                "relative group flex flex-col items-center p-2 rounded-2xl transition-all duration-300",
                 selectedXinFaIds.includes(xf.id)
-                  ? "bg-brand/20 border border-brand/50 shadow-[0_0_15px_rgba(var(--color-brand),0.3)]"
+                  ? "bg-white/10 border-brand/50 shadow-[0_0_15px_rgba(var(--color-brand),0.2)]"
                   : "bg-white/5 border border-white/10 hover:bg-white/10 opacity-60 hover:opacity-100 grayscale hover:grayscale-0"
               )}
             >
@@ -140,42 +143,47 @@ export default function ConfigPanel() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full md:w-[500px] bg-black/40 backdrop-blur-2xl border-l border-white/10 z-50 flex flex-col shadow-2xl"
+              className="fixed top-0 right-0 h-full w-full md:w-[500px] bg-white/5 backdrop-blur-3xl border-l border-white/10 z-50 flex flex-col shadow-2xl"
             >
               {/* 头部 */}
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <h2 className="text-2xl font-black text-white tracking-tighter">抽签配置</h2>
-                <button 
+              <div className="flex items-center justify-between p-8 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full" />
+                  <h2 className="text-2xl font-black text-white tracking-tighter">抽签配置</h2>
+                </div>
+                <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                  className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all border border-white/10"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
-              {/* 标签页导航 */}
-              <div className="flex p-4 gap-2">
-                {[
-                  { id: 'mode', label: '模式', icon: Shuffle },
-                  { id: 'xinfa', label: '心法', icon: Search, disabled: mode === 'custom' },
-                  { id: 'team', label: '队伍', icon: Users, disabled: mode !== 'team' },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => !tab.disabled && setActiveTab(tab.id as any)}
-                    disabled={tab.disabled}
-                    className={cn(
-                      "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all",
-                      activeTab === tab.id
-                        ? "bg-gradient-to-r from-brand to-brand-secondary text-white shadow-lg shadow-brand/20"
-                        : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white",
-                      tab.disabled && "opacity-30 cursor-not-allowed"
-                    )}
-                  >
-                    <tab.icon className="w-4 h-4" />
-                    {tab.label}
-                  </button>
-                ))}
+              {/* 标签页导航 - 精致胶囊风格 */}
+              <div className="px-6 py-4">
+                <div className="flex p-1.5 gap-1 bg-white/5 backdrop-blur-md rounded-full border border-white/10">
+                  {[
+                    { id: 'mode', label: '模式', icon: Shuffle },
+                    { id: 'xinfa', label: '心法', icon: Search, disabled: mode === 'custom' },
+                    { id: 'team', label: '队伍', icon: Users, disabled: mode !== 'team' },
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => !tab.disabled && setActiveTab(tab.id as any)}
+                      disabled={tab.disabled}
+                      className={cn(
+                        "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-bold transition-all duration-300",
+                        activeTab === tab.id
+                          ? "bg-white/10 text-white shadow-[0_2px_10px_rgba(0,0,0,0.2)] border border-white/20"
+                          : "text-white/40 hover:text-white/70",
+                        tab.disabled && "opacity-20 cursor-not-allowed"
+                      )}
+                    >
+                      <tab.icon className={cn("w-4 h-4", activeTab === tab.id ? "text-brand" : "")} />
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* 内容区域 - 滚动 */}
@@ -194,23 +202,32 @@ export default function ConfigPanel() {
                           key={m.id}
                           onClick={() => handleModeChange(m.id as any)}
                           className={cn(
-                            "flex items-center gap-4 p-5 rounded-2xl border transition-all text-left",
-                            mode === m.id 
-                              ? "bg-brand/10 border-brand/50 shadow-[0_0_20px_rgba(var(--color-brand),0.1)]" 
-                              : "bg-white/5 border-white/10 hover:bg-white/10"
+                            "flex items-center gap-4 p-5 rounded-[24px] border transition-all duration-500 text-left group relative overflow-hidden",
+                            mode === m.id
+                              ? "bg-white/10 border-brand/50 shadow-[0_0_30px_rgba(var(--color-brand),0.15)]"
+                              : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20"
                           )}
                         >
+                          {/* 选中时的背景微光 */}
+                          {mode === m.id && (
+                            <div className="absolute inset-0 bg-gradient-to-br from-brand/10 to-brand-secondary/10 animate-pulse" />
+                          )}
+                          
                           <div className={cn(
-                            "p-3 rounded-xl",
-                            mode === m.id ? "bg-gradient-to-br from-brand to-brand-secondary text-white" : "bg-white/10 text-white/50"
+                            "p-3 rounded-2xl relative z-10 transition-transform duration-500 group-hover:scale-110",
+                            mode === m.id ? "bg-gradient-to-br from-brand to-brand-secondary text-white shadow-lg shadow-brand/20" : "bg-white/10 text-white/50"
                           )}>
                             <m.icon className="w-6 h-6" />
                           </div>
-                          <div>
-                            <h3 className="text-white font-black text-lg">{m.title}</h3>
-                            <p className="text-white/50 text-xs">{m.desc}</p>
+                          <div className="relative z-10">
+                            <h3 className="text-white font-black text-lg tracking-tight">{m.title}</h3>
+                            <p className="text-white/40 text-xs">{m.desc}</p>
                           </div>
-                          {mode === m.id && <Check className="ml-auto text-brand w-6 h-6" />}
+                          {mode === m.id && (
+                            <div className="ml-auto relative z-10 w-6 h-6 rounded-full bg-brand/20 flex items-center justify-center border border-brand/50">
+                              <Check className="text-brand w-4 h-4" />
+                            </div>
+                          )}
                         </button>
                       ))}
                     </div>
@@ -261,11 +278,14 @@ export default function ConfigPanel() {
                 {/* 心法选择 */}
                 {activeTab === 'xinfa' && (
                   <div className="animate-in fade-in slide-in-from-right-4">
-                    <div className="flex justify-between items-center mb-6 sticky top-0 bg-black/40 backdrop-blur-xl py-3 z-10 -mx-2 px-2 rounded-b-xl">
-                       <span className="text-white/70 text-xs font-bold uppercase tracking-widest">已选: {selectedXinFaIds.length}</span>
+                    <div className="flex justify-between items-center mb-8 sticky top-0 bg-white/5 backdrop-blur-xl py-4 z-10 -mx-2 px-4 rounded-2xl border border-white/10 shadow-lg">
+                       <div className="flex items-center gap-2">
+                         <div className="w-1 h-4 bg-brand rounded-full" />
+                         <span className="text-white/70 text-xs font-bold uppercase tracking-widest">已选: {selectedXinFaIds.length}</span>
+                       </div>
                        <div className="flex gap-2">
-                         <button onClick={selectAll} className="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg transition-all">全选</button>
-                         <button onClick={deselectAll} className="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg transition-all">清空</button>
+                         <button onClick={selectAll} className="text-[10px] font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-white px-4 py-2 rounded-full transition-all">全选</button>
+                         <button onClick={deselectAll} className="text-[10px] font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-white px-4 py-2 rounded-full transition-all">清空</button>
                        </div>
                     </div>
                     

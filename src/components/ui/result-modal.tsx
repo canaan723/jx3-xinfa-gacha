@@ -50,26 +50,37 @@ export default function ResultModal() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-2xl bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] shadow-2xl overflow-hidden"
+            className="relative w-full max-w-2xl bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl overflow-hidden"
           >
-            {/* 装饰光效 */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-brand/30 blur-[100px] pointer-events-none" />
+            {/* 装饰光效 - 顶部主题色光晕 */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-48 bg-brand/20 blur-[120px] pointer-events-none" />
+            
+            {/* 内部微弱渐变背景 */}
+            <div className="absolute inset-0 bg-gradient-to-b from-brand/5 via-transparent to-brand-secondary/5 pointer-events-none" />
 
             <div className="relative p-8 md:p-12 flex flex-col items-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg">
-                🎉 中奖结果 🎉
-              </h2>
-              <p className="text-white/60 mb-8">恭喜以上少侠获得心法</p>
+              <div className="flex flex-col items-center mb-10">
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: 'spring', delay: 0.2 }}
+                  className="w-16 h-1 bg-gradient-to-r from-transparent via-brand to-transparent rounded-full mb-6"
+                />
+                <h2 className="text-3xl md:text-5xl font-black text-white mb-3 tracking-tighter drop-shadow-2xl">
+                  🎉 中奖结果 🎉
+                </h2>
+                <p className="text-white/40 font-bold tracking-widest uppercase text-xs">恭喜以上少侠获得心法</p>
+              </div>
 
               {/* 结果列表 */}
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto scrollbar-none">
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                 {results.map((res, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl hover:bg-white/10 transition-colors"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    className="flex items-center gap-4 bg-white/5 border border-white/10 p-5 rounded-[24px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 group"
                   >
                     {/* 头像/图标 */}
                     <div className="w-16 h-16 rounded-full bg-white/10 p-1 shadow-inner flex-shrink-0">
@@ -98,15 +109,15 @@ export default function ResultModal() {
               </div>
 
               {/* 底部按钮 */}
-              <div className="mt-8 flex gap-4">
+              <div className="mt-12 flex gap-4">
                 <button
                   onClick={handleClose}
-                  className="px-8 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-all active:scale-95"
+                  className="px-10 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white font-bold transition-all active:scale-95"
                 >
                   关闭
                 </button>
                 {/* 预留分享功能 */}
-                <button className="px-8 py-3 rounded-xl bg-brand hover:bg-brand-secondary text-white font-medium shadow-lg shadow-[0_0_20px_var(--brand)]/20 transition-all active:scale-95 flex items-center gap-2">
+                <button className="px-10 py-3.5 rounded-full bg-gradient-to-r from-brand to-brand-secondary text-white font-black shadow-[0_10px_25px_-5px_rgba(var(--color-brand),0.3)] hover:shadow-[0_15px_35px_-5px_rgba(var(--color-brand),0.4)] transition-all active:scale-95 flex items-center gap-2">
                   <Share2 className="w-4 h-4" /> 分享结果
                 </button>
               </div>
