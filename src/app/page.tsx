@@ -68,18 +68,22 @@ export default function Home() {
 
         {/* 中间：绝对居中标题 */}
         <div className="flex-[2] flex justify-center">
-          <div className="relative group">
+          <div className="relative group cursor-default pointer-events-auto">
+            {/* 核心发光背景层 - 悬停时显现 (调优为更低调的柔光) */}
+            <div className="absolute inset-0 -inset-x-12 -inset-y-6 bg-brand/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+            <div className="absolute inset-0 -inset-x-8 -inset-y-4 bg-brand-secondary/5 blur-[30px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-100 pointer-events-none" />
+
             {/* 标题文字：精致、间距大、渐变感 */}
-            <h1 className="text-lg md:text-xl font-black tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-2xl font-display whitespace-nowrap">
+            <h1 className="relative z-10 text-lg md:text-xl font-black tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-2xl font-display whitespace-nowrap transition-all duration-700 group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] group-hover:to-white/90">
               JX3 JJC心法盲盒
             </h1>
             
             {/* 底部精致装饰线 */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-gradient-to-r from-transparent via-brand to-transparent opacity-40 group-hover:w-full group-hover:opacity-100 transition-all duration-700" />
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-gradient-to-r from-transparent via-brand to-transparent opacity-40 group-hover:w-full group-hover:opacity-80 group-hover:shadow-[0_0_8px_var(--brand)] transition-all duration-700" />
             
             {/* 两侧极细装饰点 */}
-            <div className="absolute top-1/2 -left-6 -translate-y-1/2 w-1 h-1 rounded-full bg-brand/40 blur-[1px] hidden md:block" />
-            <div className="absolute top-1/2 -right-6 -translate-y-1/2 w-1 h-1 rounded-full bg-brand-secondary/40 blur-[1px] hidden md:block" />
+            <div className="absolute top-1/2 -left-6 -translate-y-1/2 w-1 h-1 rounded-full bg-brand/40 blur-[1px] hidden md:block group-hover:bg-brand/80 group-hover:scale-125 group-hover:shadow-[0_0_6px_var(--brand)] transition-all duration-700" />
+            <div className="absolute top-1/2 -right-6 -translate-y-1/2 w-1 h-1 rounded-full bg-brand-secondary/40 blur-[1px] hidden md:block group-hover:bg-brand-secondary/80 group-hover:scale-125 group-hover:shadow-[0_0_6px_var(--brand-secondary)] transition-all duration-700" />
           </div>
         </div>
 
