@@ -329,21 +329,9 @@ export default function ConfigPanel() {
                           <span className="w-1.5 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full"></span>
                           队员名单 ({members.length})
                         </h3>
-                        <div className="flex items-center gap-4">
-                          <div className="flex items-center gap-1.5 text-[10px] text-white/40 bg-white/5 px-2 py-1 rounded-lg border border-white/5">
-                            <span>点击爱心固定治疗位</span>
-                            <Heart className="w-3 h-3 fill-brand text-brand" />
-                          </div>
-                          <motion.button 
-                            onClick={addMember}
-                            disabled={members.length >= 10}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="text-xs bg-gradient-to-r from-brand to-brand-secondary hover:shadow-[0_0_15px_rgba(var(--color-brand),0.4)] text-white px-4 py-2 rounded-xl flex items-center gap-1.5 disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed font-bold transition-all shadow-lg"
-                          >
-                            <Plus className="w-3.5 h-3.5" strokeWidth={3} /> 
-                            <span>添加队员</span>
-                          </motion.button>
+                        <div className="flex items-center gap-1.5 text-[10px] text-white/40 bg-white/5 px-2 py-1 rounded-lg border border-white/5">
+                          <span>点亮爱心固定治疗位</span>
+                          <Heart className="w-3 h-3 fill-brand text-brand" />
                         </div>
                       </div>
                       
