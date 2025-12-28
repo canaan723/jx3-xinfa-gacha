@@ -122,18 +122,36 @@ export default function Wheel() {
 
   return (
     <div className="relative flex items-center justify-center w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
-      {/* 指针 - 高级便当盒风格 */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-6 z-40 w-10 h-14 flex items-center justify-center">
-        {/* 指针主体：渐变 + 阴影 */}
-        <div 
-          className="w-full h-full bg-gradient-to-b from-brand to-brand-secondary shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
-          style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}
-        />
-        {/* 指针高光 */}
-        <div 
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[40%] bg-white/20"
-          style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}
-        />
+      {/* 指针 - 重新设计：高级水晶棱镜指针（缩小版） */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-6 h-16 flex flex-col items-center pointer-events-none">
+        {/* 顶部固定基座 */}
+        <div className="w-3 h-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md z-50 flex items-center justify-center shadow-lg">
+          <div className="w-1 h-1 rounded-full bg-brand shadow-[0_0_8px_var(--brand)]" />
+        </div>
+
+        {/* 指针主体：锋利的三角形棱镜 */}
+        <div className="w-full flex-1 relative -mt-1">
+          {/* 玻璃外壳 */}
+          <div 
+            className="absolute inset-0 bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl"
+            style={{ clipPath: 'polygon(50% 100%, 100% 0, 0 0)' }}
+          />
+          
+          {/* 内部核心渐变 - 柔和过渡 */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-b from-brand/40 via-brand-secondary/60 to-transparent"
+            style={{ clipPath: 'polygon(50% 92%, 80% 8%, 20% 8%)' }}
+          />
+
+          {/* 脊线高光 */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-white/60 via-white/10 to-transparent opacity-40" />
+        </div>
+
+        {/* 尖端强化 */}
+        <div className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_10px_#fff] z-50" />
+        
+        {/* 底部环境光 */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand/10 blur-xl rounded-full -z-10" />
       </div>
 
       {/* 转盘主体 - 增强毛玻璃 */}
