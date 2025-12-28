@@ -118,13 +118,17 @@
   }
 }
 
-/* Glassmorphism 实用类 */
+/* Glassmorphism 实用类 - 增强高级感 */
 @utility glass-card {
-  @apply bg-white/40 backdrop-blur-md border border-white/20 shadow-xl;
+  @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
 }
 
 @utility glass-button {
-  @apply bg-white/20 backdrop-blur-sm border border-white/30 shadow-md hover:bg-white/30 transition-all active:scale-95;
+  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 transition-all active:scale-95;
+}
+
+@utility glass-morphism {
+  @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl;
 }
 
 @utility text-shadow-sm {

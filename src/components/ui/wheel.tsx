@@ -36,12 +36,6 @@ export default function Wheel() {
   }, [mode, selectedXinFaIds, customOptions]);
 
   // 监听开始抽奖信号
-  // 注意：这里我们通过点击按钮触发 startLottery，然后监听 lastResult 的变化来启动动画
-  // 或者直接在点击处理函数中启动动画。为了解耦，我们监听 isSpinning 状态变化可能更合适，
-  // 但 Zustand 的 isSpinning 是状态，我们需要一个触发器。
-  // 更好的方式：点击 -> setIsSpinning(true) -> startLottery() -> 计算结果 -> 启动动画 -> 动画结束 -> setIsSpinning(false) -> 显示结果
-  
-  // 这里我们采用：父组件调用 startLottery -> lastResult 更新 -> 触发动画
   const prevResultRef = useRef(lastResult);
 
   useEffect(() => {
@@ -128,25 +122,29 @@ export default function Wheel() {
 
   return (
     <div className="relative flex items-center justify-center w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
-      {/* 指针 */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 z-20 w-8 h-12 bg-gradient-to-b from-yellow-300 to-yellow-600 shadow-lg drop-shadow-md"
-           style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}
-      />
+      {/* 指针 - 高级便当盒风格 */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-6 z-40 w-10 h-14 flex items-center justify-center">
+        {/* 指针主体：渐变 + 阴影 */}
+        <div 
+          className="w-full h-full bg-gradient-to-b from-brand to-brand-secondary shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+          style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}
+        />
+        {/* 指针高光 */}
+        <div 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[40%] bg-white/20"
+          style={{ clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }}
+        />
+      </div>
 
-      {/* 转盘主体 */}
+      {/* 转盘主体 - 增强毛玻璃 */}
       <motion.div
-        className="w-full h-full rounded-full border-8 border-white/20 shadow-2xl bg-black/40 backdrop-blur-sm overflow-hidden relative"
+        className="w-full h-full rounded-full border-[12px] border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] bg-black/20 backdrop-blur-2xl overflow-hidden relative"
         animate={controls}
         style={{ rotate: rotation, backfaceVisibility: 'hidden' }}
       >
         {/* 扇区 */}
         {items.map((item, index) => {
           const rotate = index * anglePerSector;
-          const skew = 90 - anglePerSector;
-          
-          // 只有当扇区角度小于 90 度时，skew 变换才有效用于生成扇形
-          // 对于只有 2-3 个选项的情况，CSS 绘制扇形比较复杂，这里使用 conic-gradient 或 SVG 可能更好
-          // 为了通用性，我们使用绝对定位 + 旋转的方式放置内容，背景用 conic-gradient 绘制
           
           return (
             <div
@@ -154,26 +152,25 @@ export default function Wheel() {
               className="absolute top-0 left-0 w-full h-full origin-center pointer-events-none"
               style={{ transform: `rotate(${rotate}deg)` }}
             >
-              {/* 分割线 */}
-              <div className="absolute top-0 left-1/2 w-[1px] h-1/2 bg-white/20 -translate-x-1/2 origin-bottom" />
+              {/* 分割线 - 减弱感 */}
+              <div className="absolute top-0 left-1/2 w-[1px] h-1/2 bg-white/10 -translate-x-1/2 origin-bottom" />
               
-              {/* 内容容器：旋转到扇区中心 */}
+              {/* 内容容器 */}
               <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-4 md:pt-6 origin-bottom"
+                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-4 md:pt-8 origin-bottom"
                 style={{ transform: `rotate(${anglePerSector / 2}deg)` }}
               >
-                <div className="flex flex-col items-center gap-1 md:gap-2">
+                <div className="flex flex-col items-center gap-1 md:gap-3">
                   {item.image ? (
-                    <div className={cn(iconSizeClass, "rounded-full p-1")}>
-                      <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                    <div className={cn(iconSizeClass, "rounded-full p-1 bg-white/5 backdrop-blur-sm border border-white/10 shadow-inner")}>
+                      <img src={item.image} alt={item.name} className="w-full h-full object-contain drop-shadow-md" />
                     </div>
                   ) : (
-                    <div className={cn(iconSizeClass, "rounded-full flex items-center justify-center text-xs text-center p-1")}>
+                    <div className={cn(iconSizeClass, "rounded-full flex items-center justify-center text-xs text-center p-1 bg-white/10 backdrop-blur-md border border-white/20")}>
                       {item.name.slice(0, 2)}
                     </div>
                   )}
-                  {/* 扇区较窄时隐藏文字 - 修复：增加阈值或始终显示 */}
-                  <span className="text-white text-[9px] md:text-xs font-bold drop-shadow-md whitespace-nowrap writing-vertical-rl md:writing-horizontal-tb">
+                  <span className="text-white text-[10px] md:text-sm font-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap tracking-wider">
                     {item.name}
                   </span>
                 </div>
@@ -181,30 +178,38 @@ export default function Wheel() {
             </div>
           );
         })}
-        
       </motion.div>
 
-      {/* 中心装饰 (不随转盘旋转) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-24 md:h-24 z-30 flex items-center justify-center pointer-events-none">
+      {/* 中心装饰 - 高级毛玻璃便当盒 */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 z-30 flex items-center justify-center pointer-events-none">
+        {/* 外层发光 */}
+        <div className="absolute inset-0 rounded-full bg-brand/20 blur-2xl animate-pulse" />
+        
         {/* 多层嵌套圆环 */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_30px_var(--brand)]/50 border-4 border-white/30" />
-        <div className="absolute inset-2 rounded-full border-2 border-white/20 animate-[spin_10s_linear_infinite]" />
-        <div className="absolute inset-4 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
-          <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#fff]" />
+        <div className="absolute inset-0 rounded-full bg-white/5 backdrop-blur-3xl border border-white/20 shadow-2xl flex items-center justify-center">
+          {/* 内部渐变环 */}
+          <div className="w-[80%] h-[80%] rounded-full border-2 border-brand/50 bg-gradient-to-br from-brand/20 to-brand-secondary/20 animate-[spin_15s_linear_infinite]" />
+          
+          {/* 核心点 */}
+          <div className="absolute w-4 h-4 md:w-6 md:h-6 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_20px_var(--brand)] border border-white/40 flex items-center justify-center">
+             <div className="w-1 h-1 bg-white rounded-full shadow-[0_0_5px_#fff]" />
+          </div>
         </div>
         
-        {/* 正在抽取的提示 - 移至转盘下方展示，避免遮挡中心且更易读 */}
+        {/* 正在抽取的提示 */}
         <AnimatePresence>
           {spinningTarget && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute top-24 md:top-32 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/60 backdrop-blur-xl px-6 py-2 rounded-2xl border border-brand/50 text-white shadow-[0_0_20px_rgba(var(--color-brand),0.3)]"
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.9 }}
+              className="absolute top-28 md:top-40 left-1/2 -translate-x-1/2 whitespace-nowrap glass-morphism px-8 py-3 rounded-2xl text-white"
             >
               <div className="flex flex-col items-center gap-1">
-                <span className="text-[10px] text-white/50 uppercase tracking-widest">Current Drawing</span>
-                <span className="text-lg font-black text-brand drop-shadow-[0_0_10px_var(--brand)]">{spinningTarget}</span>
+                <span className="text-[10px] text-white/60 uppercase tracking-[0.2em] font-bold">Drawing</span>
+                <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-brand to-brand-secondary bg-clip-text text-transparent drop-shadow-sm">
+                  {spinningTarget}
+                </span>
               </div>
             </motion.div>
           )}

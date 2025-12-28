@@ -44,8 +44,15 @@ export const HEALERS: XinFa[] = [
 
 export const ALL_XINFA = [...INTERNAL_DPS, ...EXTERNAL_DPS, ...HEALERS];
 
-export const BACKGROUNDS = [
-  { id: 'cg', src: '/bg/cg.jfif', theme: '#1fc9e7' }, // 青色
-  { id: 'mj', src: '/bg/mj.jfif', theme: '#e71f1f' }, // 红色
-  { id: 'wd', src: '/bg/wd.jfif', theme: '#a51fe7' }, // 紫色
+export interface Background {
+  id: string;
+  src: string;
+  theme: string;
+  themeSecondary: string;
+}
+
+export const BACKGROUNDS: Background[] = [
+  { id: 'cg', src: '/bg/cg.jfif', theme: '#1fc9e7', themeSecondary: '#35bfab' }, // 青色 -> 翠青
+  { id: 'mj', src: '/bg/mj.jfif', theme: '#e71f1f', themeSecondary: '#f59e0b' }, // 红色 -> 橙黄
+  { id: 'wd', src: '/bg/wd.jfif', theme: '#a51fe7', themeSecondary: '#ec4899' }, // 紫色 -> 粉红
 ];

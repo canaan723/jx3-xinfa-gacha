@@ -96,9 +96,7 @@ export const useLotteryStore = create<LotteryState>()(
         // 设置 CSS 变量
         if (typeof document !== 'undefined') {
           document.documentElement.style.setProperty('--brand', randomBg.theme);
-          // 生成一个稍浅或稍深的辅助色
-          // 简单处理：直接使用同色，或者后续在 CSS 中用 color-mix 处理
-          document.documentElement.style.setProperty('--brand-secondary', randomBg.theme);
+          document.documentElement.style.setProperty('--brand-secondary', randomBg.themeSecondary);
         }
       },
 
@@ -113,7 +111,7 @@ export const useLotteryStore = create<LotteryState>()(
         // 设置 CSS 变量
         if (typeof document !== 'undefined') {
           document.documentElement.style.setProperty('--brand', nextBg.theme);
-          document.documentElement.style.setProperty('--brand-secondary', nextBg.theme);
+          document.documentElement.style.setProperty('--brand-secondary', nextBg.themeSecondary);
         }
       },
 
