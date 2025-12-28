@@ -191,7 +191,7 @@ export default function Wheel() {
               >
                 <div className="flex flex-col items-center gap-2 md:gap-3">
                   {item.image ? (
-                    <div className={cn(iconSizeClass, "rounded-full p-1 bg-white/5 backdrop-blur-sm border border-white/10 shadow-inner")}>
+                    <div className={cn(iconSizeClass, "flex items-center justify-center")}>
                       <img src={item.image} alt={item.name} className="w-full h-full object-contain drop-shadow-md" />
                     </div>
                   ) : (

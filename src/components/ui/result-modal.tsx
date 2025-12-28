@@ -124,9 +124,9 @@ export default function ResultModal() {
                     className="flex items-center gap-4 bg-white/5 border border-white/10 p-5 rounded-[24px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 group"
                   >
                     {/* 头像/图标 */}
-                    <div className="w-16 h-16 rounded-full bg-white/10 p-1 shadow-inner flex-shrink-0">
+                    <div className="w-16 h-16 flex items-center justify-center flex-shrink-0">
                       {res.image ? (
-                        <img src={res.image} alt={res.name} className="w-full h-full object-contain" />
+                        <img src={res.image} alt={res.name} className="w-full h-full object-contain drop-shadow-md" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-white font-bold text-xl">
                           {res.name.slice(0, 1)}
