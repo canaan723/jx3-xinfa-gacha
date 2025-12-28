@@ -71,7 +71,7 @@ export default function ResultModal() {
   return (
     <AnimatePresence>
       {show && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
           {/* 背景遮罩 */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -84,11 +84,11 @@ export default function ResultModal() {
           {/* 弹窗主体 */}
           <motion.div
             ref={modalRef}
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-2xl bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl overflow-hidden"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative w-full max-w-2xl max-h-[90vh] bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl overflow-hidden flex flex-col"
           >
             {/* 装饰光效 - 顶部主题色光晕 */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-48 bg-gradient-to-b from-brand/20 to-transparent blur-[120px] pointer-events-none" />
@@ -96,8 +96,8 @@ export default function ResultModal() {
             {/* 内部微弱渐变背景 */}
             <div className="absolute inset-0 bg-gradient-to-b from-brand/5 via-transparent to-brand-secondary/5 pointer-events-none" />
 
-            <div className="relative p-8 md:p-12 flex flex-col items-center">
-              <div className="flex flex-col items-center mb-10">
+            <div className="relative p-6 md:p-10 flex flex-col items-center overflow-hidden">
+              <div className="flex flex-col items-center mb-6">
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -112,15 +112,15 @@ export default function ResultModal() {
 
               {/* 结果列表 */}
               <div className={cn(
-                "w-full grid gap-4 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent",
+                "w-full grid gap-3 max-h-[40vh] overflow-y-auto overflow-x-hidden pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent",
                 results.length === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-2"
               )}>
                 {results.map((res, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + index * 0.05 }}
                     className="flex items-center gap-4 bg-white/5 border border-white/10 p-5 rounded-[24px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 group"
                   >
                     {/* 头像/图标 */}
@@ -152,7 +152,7 @@ export default function ResultModal() {
               </div>
 
               {/* 水印信息 - 仅在导出时或底部微弱显示 */}
-              <div className="mt-8 flex flex-col items-center gap-1 opacity-20">
+              <div className="mt-6 flex flex-col items-center gap-1 opacity-20">
                 <p className="text-[10px] text-white font-medium tracking-widest">
                   https://jjc-gacha.qjyg.de
                 </p>
@@ -162,7 +162,7 @@ export default function ResultModal() {
               </div>
 
               {/* 底部按钮 */}
-              <div className="mt-8 flex gap-3 md:gap-4 action-buttons">
+              <div className="mt-6 flex gap-3 md:gap-4 action-buttons">
                 <button
                   onClick={handleClose}
                   className="px-6 md:px-10 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white font-bold transition-all active:scale-95 whitespace-nowrap"
