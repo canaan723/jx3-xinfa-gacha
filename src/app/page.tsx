@@ -54,15 +54,15 @@ export default function Home() {
       </motion.div>
 
       {/* 顶部导航布局：三段式（左、中、右） */}
-      <div className="absolute top-0 left-0 w-full px-6 py-6 z-20 flex justify-between items-center pointer-events-none">
+      <div className="absolute top-0 left-0 w-full px-4 md:px-6 py-4 md:py-6 z-20 flex justify-between items-center pointer-events-none">
         {/* 左侧：功能按钮 */}
         <div className="flex-1 flex justify-start">
           <button
             onClick={(e) => setNextBg(e)}
-            className="pointer-events-auto p-2.5 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 transition-all active:scale-90 group"
+            className="pointer-events-auto p-2 md:p-2.5 rounded-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 transition-all active:scale-90 group"
             title="切换背景"
           >
-            <RefreshCcw className="w-5 h-5 text-white/40 group-hover:text-white transition-colors" />
+            <RefreshCcw className="w-4 h-4 md:w-5 md:h-5 text-white/40 group-hover:text-white transition-colors" />
           </button>
         </div>
 
@@ -74,7 +74,7 @@ export default function Home() {
             <div className="absolute inset-0 -inset-x-8 -inset-y-4 bg-brand-secondary/5 blur-[30px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 delay-100 pointer-events-none" />
 
             {/* 标题文字：精致、间距大、渐变感 */}
-            <h1 className="relative z-10 text-lg md:text-xl font-black tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-2xl font-display whitespace-nowrap transition-all duration-700 group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] group-hover:to-white/90">
+            <h1 className="relative z-10 text-base md:text-xl font-black tracking-[0.2em] md:tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-2xl font-display whitespace-nowrap transition-all duration-700 group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] group-hover:to-white/90">
               JX3 JJC心法盲盒
             </h1>
             
@@ -105,14 +105,14 @@ export default function Home() {
       </motion.div>
 
       {/* 底部操作栏：固定在页脚上方 */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 w-full max-w-fit px-6">
+      <div className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3 md:gap-4 w-full max-w-fit px-4 md:px-6">
         {/* 开始按钮 - 重新设计：精致大圆角毛玻璃风格 */}
         <Magnetic strength={0.3}>
           <button
             onClick={startLottery}
             disabled={isSpinning}
             className={cn(
-              "group relative px-6 md:px-10 py-3 rounded-full transition-all duration-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden flex-shrink-0",
+              "group relative px-5 md:px-10 py-2.5 md:py-3 rounded-full transition-all duration-500 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden flex-shrink-0",
               "bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]",
               !isSpinning && "hover:bg-white/10 hover:border-white/40 hover:shadow-[0_15px_35px_-5px_var(--brand)]/20"
             )}
@@ -120,11 +120,11 @@ export default function Home() {
           {/* 极简背景渐变 */}
           <div className="absolute inset-0 bg-gradient-to-br from-brand/5 to-brand-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
-          <span className="relative z-10 flex items-center gap-2 text-base md:text-lg font-bold tracking-widest text-white/90 group-hover:text-white transition-colors whitespace-nowrap">
+          <span className="relative z-10 flex items-center gap-2 text-sm md:text-lg font-bold tracking-widest text-white/90 group-hover:text-white transition-colors whitespace-nowrap">
             {isSpinning ? (
-              <RefreshCcw className="w-4 h-4 animate-spin text-brand" />
+              <RefreshCcw className="w-3.5 h-3.5 md:w-4 md:h-4 animate-spin text-brand" />
             ) : (
-              <div className="w-2 h-2 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
             )}
             {isSpinning ? '抽取中' : mode === 'team' ? '开始队伍抽签' : mode === 'single' ? '开始个人抽签' : '开始自定义抽签'}
           </span>
@@ -140,12 +140,12 @@ export default function Home() {
             onClick={() => setIsConfigOpen(true)}
             disabled={isSpinning}
             className={cn(
-              "p-3.5 rounded-full transition-all duration-500 active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed",
+              "p-2.5 md:p-3.5 rounded-full transition-all duration-500 active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed",
               "bg-white/5 backdrop-blur-xl border border-white/20 shadow-lg text-white/60 hover:text-white hover:bg-white/10 hover:border-white/40 group"
             )}
             title="抽签配置"
           >
-            <Settings className="w-6 h-6 group-hover:rotate-90 transition-transform duration-500" />
+            <Settings className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-90 transition-transform duration-500" />
           </button>
         </Magnetic>
       </div>

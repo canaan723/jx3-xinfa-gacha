@@ -51,23 +51,23 @@ export default function ResultModal() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="relative w-full max-w-2xl max-h-[90vh] bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[40px] shadow-2xl overflow-hidden flex flex-col"
+            className="relative w-full max-w-2xl max-h-[90vh] bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[24px] md:rounded-[40px] shadow-2xl overflow-hidden flex flex-col"
           >
             {/* 装饰光效 - 顶部主题色光晕 */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-48 bg-gradient-to-b from-brand/20 to-transparent blur-[120px] pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 md:h-48 bg-gradient-to-b from-brand/20 to-transparent blur-[80px] md:blur-[120px] pointer-events-none" />
             
             {/* 内部微弱渐变背景 */}
             <div className="absolute inset-0 bg-gradient-to-b from-brand/5 via-transparent to-brand-secondary/5 pointer-events-none" />
 
-            <div className="relative p-6 md:p-10 flex flex-col items-center overflow-hidden">
-              <div className="flex flex-col items-center mb-6">
+            <div className="relative p-5 md:p-10 flex flex-col items-center overflow-hidden">
+              <div className="flex flex-col items-center mb-4 md:mb-6">
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: 'spring', delay: 0.2 }}
-                  className="w-16 h-1 bg-gradient-to-r from-transparent via-brand to-transparent rounded-full mb-6"
+                  className="w-12 md:w-16 h-1 bg-gradient-to-r from-transparent via-brand to-transparent rounded-full mb-4 md:mb-6"
                 />
-                <h2 className="text-3xl md:text-5xl font-black text-white mb-3 tracking-tighter drop-shadow-2xl">
+                <h2 className="text-2xl md:text-5xl font-black text-white mb-2 md:mb-3 tracking-tighter drop-shadow-2xl">
                   抽取结果
                 </h2>
                 <p className="text-white/40 font-bold tracking-widest uppercase text-xs">恭喜侠士，加油喔！</p>
@@ -84,10 +84,10 @@ export default function ResultModal() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 + index * 0.05 }}
-                    className="flex items-center gap-4 bg-white/5 border border-white/10 p-5 rounded-[24px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 group"
+                    className="flex items-center gap-3 md:gap-4 bg-white/5 border border-white/10 p-4 md:p-5 rounded-[20px] md:rounded-[24px] hover:bg-white/10 hover:border-white/20 transition-all duration-500 group"
                   >
                     {/* 头像/图标 */}
-                    <div className="w-16 h-16 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center flex-shrink-0">
                       {res.image ? (
                         <div className="w-full h-full">
                           <img src={res.image} alt={res.name} className="w-full h-full object-contain drop-shadow-md" />
@@ -106,7 +106,7 @@ export default function ResultModal() {
                           {res.memberId}
                         </div>
                       )}
-                      <div className="text-white font-bold text-xl truncate">
+                      <div className="text-white font-bold text-lg md:text-xl truncate">
                         {res.name}
                       </div>
                     </div>

@@ -132,9 +132,9 @@ export default function Wheel() {
   const textSizeClass = getTextSize();
 
   return (
-    <div className="relative flex items-center justify-center w-[350px] h-[350px] md:w-[580px] md:h-[580px]">
+    <div className="relative flex items-center justify-center w-[320px] h-[320px] sm:w-[350px] sm:h-[350px] md:w-[580px] md:h-[580px]">
       {/* 指针 - 重新设计：高级水晶棱镜指针（缩小版） */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-6 h-16 flex flex-col items-center pointer-events-none">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-5 h-12 md:w-6 md:h-16 flex flex-col items-center pointer-events-none">
         {/* 顶部固定基座 */}
         <div className="w-3 h-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md z-50 flex items-center justify-center shadow-lg">
           <div className="w-1 h-1 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)]" />
@@ -188,7 +188,7 @@ export default function Wheel() {
               
               {/* 内容容器 */}
               <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-4 md:pt-8 origin-bottom"
+                className="absolute top-0 left-1/2 -translate-x-1/2 h-1/2 flex flex-col items-center justify-start pt-3 sm:pt-4 md:pt-8 origin-bottom"
                 style={{ transform: `rotate(${anglePerSector / 2}deg)` }}
               >
                 <div className="flex flex-col items-center gap-1 md:gap-1.5">
@@ -223,7 +223,7 @@ export default function Wheel() {
       </motion.div>
 
       {/* 中心装饰 - 高级毛玻璃便当盒 */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-36 md:h-36 z-30 flex items-center justify-center pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 z-30 flex items-center justify-center pointer-events-none">
         {/* 外层发光 */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand/20 to-brand-secondary/20 blur-2xl animate-pulse" />
         
@@ -245,9 +245,9 @@ export default function Wheel() {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -5, scale: 0.95 }}
-              className="absolute top-28 md:top-40 left-1/2 -translate-x-1/2 whitespace-nowrap z-50"
+              className="absolute top-24 sm:top-28 md:top-40 left-1/2 -translate-x-1/2 whitespace-nowrap z-50"
             >
-              <div className="relative px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_20px_-5px_rgba(0,0,0,0.3)] flex items-center gap-3 overflow-hidden">
+              <div className="relative px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_20px_-5px_rgba(0,0,0,0.3)] flex items-center gap-2 sm:gap-3 overflow-hidden">
                 {/* 内部微弱渐变背景 */}
                 <div className="absolute inset-0 bg-gradient-to-r from-brand/5 to-brand-secondary/5" />
                 

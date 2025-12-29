@@ -102,19 +102,19 @@ export default function ConfigPanel() {
             {allSelected ? '全不选' : '全选'}
           </button>
         </div>
-        <div className="grid grid-cols-5 md:grid-cols-8 gap-2">
+        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-1.5 md:gap-2">
           {list.map(xf => (
             <button
               key={xf.id}
               onClick={() => toggleXinFa(xf.id)}
               className={cn(
-                "relative group flex flex-col items-center p-1.5 rounded-xl transition-all duration-300",
+                "relative group flex flex-col items-center p-1 md:p-1.5 rounded-xl transition-all duration-300",
                 selectedXinFaIds.includes(xf.id)
                   ? "bg-white/10 border-brand/30 shadow-[0_0_10px_rgba(var(--color-brand),0.1)]"
                   : "bg-white/5 border border-white/5 hover:bg-white/10 opacity-60 hover:opacity-100 grayscale hover:grayscale-0"
               )}
             >
-              <div className="w-8 h-8 md:w-10 md:h-10 relative mb-1">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 relative mb-1">
                 <img src={xf.image} alt={xf.name} className="w-full h-full object-contain drop-shadow-sm" />
               </div>
               <span className="text-[9px] md:text-[10px] text-white/80 text-center font-medium w-full leading-tight">{xf.name}</span>
@@ -157,10 +157,10 @@ export default function ConfigPanel() {
               className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-white/5 backdrop-blur-3xl border-l border-white/10 z-50 flex flex-col shadow-2xl"
             >
               {/* 头部 - 压缩高度 */}
-              <div className="flex items-center justify-between px-8 py-5 border-b border-white/5">
+              <div className="flex items-center justify-between px-5 md:px-8 py-4 md:py-5 border-b border-white/5">
                 <div className="flex items-center gap-3">
                   <div className="w-1.5 h-5 bg-gradient-to-b from-brand to-brand-secondary rounded-full" />
-                  <h2 className="text-xl font-black text-white tracking-tight">抽签配置</h2>
+                  <h2 className="text-lg md:text-xl font-black text-white tracking-tight">抽签配置</h2>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
@@ -171,7 +171,7 @@ export default function ConfigPanel() {
               </div>
 
               {/* 标签页导航 - 精致胶囊风格 */}
-              <div className="px-6 py-3">
+              <div className="px-4 md:px-6 py-2 md:py-3">
                 <div className="flex p-1 gap-1 bg-white/5 backdrop-blur-md rounded-full border border-white/10">
                   {[
                     { id: 'mode', label: '模式', icon: Shuffle },
@@ -203,7 +203,7 @@ export default function ConfigPanel() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
+                className="flex-1 overflow-y-auto p-4 md:p-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
               >
                 
                 {/* 模式选择 */}
@@ -360,13 +360,13 @@ export default function ConfigPanel() {
                       
                       <div className="space-y-3">
                         {members.map((member, i) => (
-                          <div key={i} className="flex items-center gap-3 group">
-                            <span className="text-white/20 text-[10px] font-black w-4">{String(i + 1).padStart(2, '0')}</span>
+                          <div key={i} className="flex items-center gap-2 md:gap-3 group">
+                            <span className="text-white/20 text-[10px] font-black w-4 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
                             <input
                               type="text"
                               value={member}
                               onChange={(e) => handleMemberChange(i, e.target.value)}
-                              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white font-medium focus:border-brand/50 focus:bg-white/10 outline-none transition-all"
+                              className="flex-1 min-w-0 bg-white/5 border border-white/10 rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-white text-sm md:text-base font-medium focus:border-brand/50 focus:bg-white/10 outline-none transition-all"
                             />
                             
                             {/* 固定治疗勾选 */}
@@ -374,20 +374,20 @@ export default function ConfigPanel() {
                               onClick={() => toggleFixedHealer(i)}
                               disabled={!fixedHealerIndices.includes(i) && fixedHealerIndices.length >= healerCount}
                               className={cn(
-                                "p-2.5 rounded-xl transition-all border",
+                                "p-2 md:p-2.5 rounded-xl transition-all border flex-shrink-0",
                                 fixedHealerIndices.includes(i)
                                   ? "bg-brand/20 border-brand/50 text-brand shadow-[0_0_10px_rgba(var(--color-brand),0.2)]"
                                   : "bg-white/5 border-white/10 text-white/20 hover:text-white/40 disabled:opacity-10 disabled:cursor-not-allowed"
                               )}
                               title={fixedHealerIndices.includes(i) ? "取消固定治疗" : "固定为此人抽取治疗心法"}
                             >
-                              <Heart className={cn("w-4 h-4", fixedHealerIndices.includes(i) ? "fill-current" : "")} />
+                              <Heart className={cn("w-3.5 h-3.5 md:w-4 md:h-4", fixedHealerIndices.includes(i) ? "fill-current" : "")} />
                             </button>
 
                             <button
                               onClick={() => removeMember(i)}
                               disabled={members.length <= 1}
-                              className="p-2.5 text-white/20 hover:text-red-400 hover:bg-white/5 rounded-xl transition-all disabled:opacity-0"
+                              className="p-2 md:p-2.5 text-white/20 hover:text-red-400 hover:bg-white/5 rounded-xl transition-all disabled:opacity-0 flex-shrink-0"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
