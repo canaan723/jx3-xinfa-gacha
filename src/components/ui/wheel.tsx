@@ -134,9 +134,9 @@ export default function Wheel() {
   return (
     <div className="relative flex items-center justify-center w-[320px] h-[320px] sm:w-[350px] sm:h-[350px] md:w-[580px] md:h-[580px]">
       {/* 指针 - 重新设计：高级水晶棱镜指针（缩小版） */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-5 h-12 md:w-6 md:h-16 flex flex-col items-center pointer-events-none">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 z-40 w-4 h-10 md:w-6 md:h-16 flex flex-col items-center pointer-events-none">
         {/* 顶部固定基座 */}
-        <div className="w-3 h-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md z-50 flex items-center justify-center shadow-lg">
+        <div className="w-2.5 h-2.5 rounded-full border border-white/30 bg-white/10 backdrop-blur-md z-50 flex items-center justify-center shadow-lg">
           <div className="w-1 h-1 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)]" />
         </div>
 
@@ -162,7 +162,7 @@ export default function Wheel() {
         <div className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_10px_#fff] z-50" />
         
         {/* 底部环境光 */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-t from-brand/20 to-transparent blur-xl rounded-full -z-10" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-gradient-to-t from-brand/20 to-transparent blur-xl rounded-full -z-10" />
       </div>
 
       {/* 转盘主体 - 增强毛玻璃 */}
