@@ -192,7 +192,7 @@ export default function ConfigPanel() {
                         tab.disabled && "opacity-20 cursor-not-allowed"
                       )}
                     >
-                      <tab.icon className={cn("w-4 h-4", activeTab === tab.id ? "text-brand" : "")} />
+                      <tab.icon className={cn("w-4 h-4", activeTab === tab.id ? "icon-gradient" : "")} />
                       {tab.label}
                     </button>
                   ))}
@@ -245,7 +245,7 @@ export default function ConfigPanel() {
                           </div>
                           {mode === m.id && (
                             <div className="ml-auto relative z-10 w-6 h-6 rounded-full bg-gradient-to-br from-brand/20 to-brand-secondary/20 flex items-center justify-center border border-brand/50">
-                              <Check className="text-brand w-4 h-4" />
+                              <Check className="icon-gradient w-4 h-4" />
                             </div>
                           )}
                         </motion.button>
@@ -356,7 +356,7 @@ export default function ConfigPanel() {
                         治疗配置
                       </h3>
                       <div className="bg-white/5 p-6 rounded-2xl border border-white/10 shadow-inner">
-                        <label className="text-white/80 text-sm mb-4 block font-bold">必须包含治疗心法数量: <span className="text-brand font-black text-xl ml-2">{healerCount}</span></label>
+                        <label className="text-white/80 text-sm mb-4 block font-bold">必须包含治疗心法数量: <span className="text-gradient font-black text-xl ml-2">{healerCount}</span></label>
                         <input
                           type="range"
                           min="0"
@@ -364,7 +364,7 @@ export default function ConfigPanel() {
                           step="1"
                           value={healerCount}
                           onChange={(e) => setHealerCount(parseInt(e.target.value))}
-                          className="w-full accent-brand h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer"
+                          className="w-full custom-slider cursor-pointer"
                         />
                         <div className="flex justify-between text-[10px] font-black text-white/30 mt-3 px-1">
                           <span>0</span>
@@ -385,7 +385,7 @@ export default function ConfigPanel() {
                         </h3>
                         <div className="flex items-center gap-1.5 text-[10px] text-white/40 bg-white/5 px-2 py-1 rounded-lg border border-white/5">
                           <span>点亮爱心固定治疗位</span>
-                          <Heart className="w-3 h-3 fill-brand text-brand" />
+                          <Heart className="w-3 h-3 icon-gradient-fill" />
                         </div>
                       </div>
                       
@@ -407,12 +407,12 @@ export default function ConfigPanel() {
                               className={cn(
                                 "p-2 md:p-2.5 rounded-xl transition-all border flex-shrink-0",
                                 fixedHealerIndices.includes(i)
-                                  ? "bg-brand/20 border-brand/50 text-brand shadow-[0_0_10px_rgba(var(--color-brand),0.2)]"
+                                  ? "bg-brand/20 border-brand/50 shadow-[0_0_10px_rgba(var(--color-brand),0.2)]"
                                   : "bg-white/5 border-white/10 text-white/20 hover:text-white/40 disabled:opacity-10 disabled:cursor-not-allowed"
                               )}
                               title={fixedHealerIndices.includes(i) ? "取消固定治疗" : "固定为此人抽取治疗心法"}
                             >
-                              <Heart className={cn("w-3.5 h-3.5 md:w-4 md:h-4", fixedHealerIndices.includes(i) ? "fill-current" : "")} />
+                              <Heart className={cn("w-3.5 h-3.5 md:w-4 md:h-4", fixedHealerIndices.includes(i) ? "icon-gradient-fill" : "")} />
                             </button>
 
                             <button

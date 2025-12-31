@@ -122,7 +122,7 @@ export default function Home() {
           
           <span className="relative z-10 flex items-center gap-2 text-sm md:text-lg font-bold tracking-widest text-white/90 group-hover:text-white transition-colors whitespace-nowrap">
             {isSpinning ? (
-              <RefreshCcw className="w-3.5 h-3.5 md:w-4 md:h-4 animate-spin text-brand" />
+              <RefreshCcw className="w-3.5 h-3.5 md:w-4 md:h-4 animate-spin icon-gradient" />
             ) : (
               <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-gradient-to-br from-brand to-brand-secondary shadow-[0_0_8px_var(--brand)] group-hover:scale-125 transition-transform" />
             )}

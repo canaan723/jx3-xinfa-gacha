@@ -142,6 +142,47 @@
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
+@utility text-gradient {
+  @apply bg-gradient-to-br from-brand via-brand/90 to-brand-secondary bg-clip-text text-transparent;
+}
+
+@utility icon-gradient {
+  @apply text-brand;
+  stroke: url(#brand-gradient);
+  fill: none;
+}
+
+@utility icon-gradient-fill {
+  @apply text-brand;
+  stroke: url(#brand-gradient);
+  fill: url(#brand-gradient);
+}
+
+/* 自定义滑块样式 */
+@layer components {
+  .custom-slider {
+    @apply appearance-none bg-white/10 rounded-lg h-1.5 outline-none transition-all;
+  }
+
+  .custom-slider::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 rounded-full cursor-pointer transition-all shadow-[0_0_10px_rgba(var(--color-brand),0.5)];
+    background: linear-gradient(135deg, var(--brand) 0%, color-mix(in srgb, var(--brand), var(--brand-secondary)) 50%, var(--brand-secondary) 100%);
+  }
+
+  .custom-slider::-moz-range-thumb {
+    @apply w-4 h-4 border-none rounded-full cursor-pointer transition-all shadow-[0_0_10px_rgba(var(--color-brand),0.5)];
+    background: linear-gradient(135deg, var(--brand) 0%, color-mix(in srgb, var(--brand), var(--brand-secondary)) 50%, var(--brand-secondary) 100%);
+  }
+
+  .custom-slider::-webkit-slider-thumb:hover {
+    @apply scale-125 shadow-[0_0_15px_rgba(var(--color-brand),0.8)];
+  }
+
+  .custom-slider::-moz-range-thumb:hover {
+    @apply scale-125 shadow-[0_0_15px_rgba(var(--color-brand),0.8)];
+  }
+}
+
 /* View Transition Reveal 动效 */
 ::view-transition-old(root),
 ::view-transition-new(root) {
