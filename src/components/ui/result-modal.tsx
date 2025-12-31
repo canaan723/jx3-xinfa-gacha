@@ -115,13 +115,28 @@ export default function ResultModal() {
               </div>
 
               {/* 底部按钮 */}
-              <div className="mt-6 flex gap-3 md:gap-4 action-buttons">
+              <div className="mt-6 flex flex-col items-center gap-6 action-buttons">
                 <button
                   onClick={handleClose}
                   className="px-6 md:px-10 py-3.5 rounded-full bg-gradient-to-r from-brand to-brand-secondary text-white font-black shadow-[0_10px_25px_-5px_rgba(var(--color-brand),0.3)] hover:shadow-[0_15px_35px_-5px_rgba(var(--color-brand),0.4)] transition-all active:scale-95 whitespace-nowrap"
                 >
                   确定
                 </button>
+
+                {/* 网站信息 */}
+                <div className="flex flex-col items-center gap-1 opacity-30 hover:opacity-80 transition-opacity duration-500">
+                  <a
+                    href="https://jjc-gacha.qjyg.de/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] md:text-xs font-medium text-white hover:underline tracking-wider"
+                  >
+                    jjc-gacha.qjyg.de
+                  </a>
+                  <div className="text-[8px] md:text-[10px] text-white/70 font-bold uppercase tracking-[0.2em]">
+                    Made by <a href="https://blog.qjyg.de/" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors">清绝</a>
+                  </div>
+                </div>
               </div>
             </div>
 
