@@ -25,6 +25,8 @@ interface LotteryState {
   setHealerCount: (count: number) => void;
   fixedHealerIndices: number[];
   toggleFixedHealer: (index: number) => void;
+  allowRepeat: boolean;
+  setAllowRepeat: (allow: boolean) => void;
 
   // 自定义选项
   customOptions: string[];
@@ -85,6 +87,8 @@ export const useLotteryStore = create<LotteryState>()(
         return { members, fixedHealerIndices };
       }),
       healerCount: 1,
+      allowRepeat: true, // 默认为完全随机（允许重复）
+      setAllowRepeat: (allowRepeat) => set({ allowRepeat }),
       setHealerCount: (count) => set((state) => {
         // 如果治疗人数减少，可能需要移除多余的固定名额
         let fixedHealerIndices = state.fixedHealerIndices;
@@ -162,7 +166,7 @@ export const useLotteryStore = create<LotteryState>()(
         if (state.mode === 'single') {
           result = drawSingle(selectedXinFa);
         } else if (state.mode === 'team') {
-          result = drawTeam(state.members, selectedXinFa, state.healerCount, state.fixedHealerIndices);
+          result = drawTeam(state.members, selectedXinFa, state.healerCount, state.fixedHealerIndices, state.allowRepeat);
         } else if (state.mode === 'custom') {
           result = drawCustom(state.customOptions);
         }
@@ -179,6 +183,7 @@ export const useLotteryStore = create<LotteryState>()(
         members: state.members,
         healerCount: state.healerCount,
         fixedHealerIndices: state.fixedHealerIndices,
+        allowRepeat: state.allowRepeat,
         customOptions: state.customOptions,
       }),
     }

@@ -32,7 +32,8 @@ export function drawTeam(
   members: string[],
   selectedXinFa: XinFa[],
   healerCount: number,
-  fixedHealerIndices: number[] = []
+  fixedHealerIndices: number[] = [],
+  allowRepeat: boolean = false
 ): LotteryResult[] {
   if (members.length === 0 || selectedXinFa.length === 0) return [];
 
@@ -52,7 +53,11 @@ export function drawTeam(
       if (currentPool.length === 0) currentPool = [...pool];
       const idx = Math.floor(Math.random() * currentPool.length);
       drawn.push(currentPool[idx]);
-      currentPool.splice(idx, 1);
+      
+      // 如果不允许重复，则从池中移除已抽中的心法
+      if (!allowRepeat) {
+        currentPool.splice(idx, 1);
+      }
     }
     return drawn;
   };

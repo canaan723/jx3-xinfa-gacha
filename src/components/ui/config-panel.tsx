@@ -29,7 +29,9 @@ export default function ConfigPanel() {
     removeCustomOption,
     isSpinning,
     fixedHealerIndices,
-    toggleFixedHealer
+    toggleFixedHealer,
+    allowRepeat,
+    setAllowRepeat
   } = useLotteryStore();
 
   // 模式切换处理
@@ -319,6 +321,35 @@ export default function ConfigPanel() {
                 {/* 队伍设置 */}
                 {activeTab === 'team' && (
                   <motion.div variants={containerVariants} className="space-y-8">
+                    <motion.div variants={itemVariants}>
+                      <h3 className="text-white font-black mb-4 flex items-center gap-2">
+                        <span className="w-1.5 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full"></span>
+                        抽签规则
+                      </h3>
+                      <div className="bg-white/5 p-5 rounded-2xl border border-white/10 flex items-center justify-between group hover:bg-white/10 transition-all">
+                        <div>
+                          <h4 className="text-white font-bold text-sm">允许心法重复</h4>
+                          <p className="text-white/40 text-[10px]">开启后，不同队员可能会抽到相同的心法</p>
+                        </div>
+                        <button
+                          onClick={() => setAllowRepeat(!allowRepeat)}
+                          className={cn(
+                            "w-12 h-6 rounded-full transition-all duration-300 relative border",
+                            allowRepeat
+                              ? "bg-brand/20 border-brand/50 shadow-[0_0_10px_rgba(var(--color-brand),0.2)]"
+                              : "bg-white/5 border-white/10"
+                          )}
+                        >
+                          <div className={cn(
+                            "absolute top-1 w-4 h-4 rounded-full transition-all duration-300 shadow-sm",
+                            allowRepeat
+                              ? "right-1 bg-gradient-to-br from-brand to-brand-secondary"
+                              : "left-1 bg-white/20"
+                          )} />
+                        </button>
+                      </div>
+                    </motion.div>
+
                     <motion.div variants={itemVariants}>
                       <h3 className="text-white font-black mb-4 flex items-center gap-2">
                         <span className="w-1.5 h-6 bg-gradient-to-b from-brand to-brand-secondary rounded-full"></span>
